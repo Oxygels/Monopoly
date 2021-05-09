@@ -39,7 +39,7 @@ public class Joueur {
 
     public void setPosition(int position) {
         if(position < 0)
-            this.position = -position;
+           throw new IllegalArgumentException("la position doit etre un nombre positive");
         else
             this.position = position;
     }
@@ -50,7 +50,7 @@ public class Joueur {
 
     public void setNbCartesLibPrison(int nbCartesLibPrison) {
         if(nbCartesLibPrison < 0)
-            this.nbCartesLibPrison = -nbCartesLibPrison;
+            throw new IllegalArgumentException("le nombre de carte de prison doit etre positif");
         else
             this.nbCartesLibPrison = nbCartesLibPrison;
     }
@@ -61,7 +61,7 @@ public class Joueur {
 
     public void setMontantBillet(int montantBillet) {
         if(montantBillet < 0)
-            this.montantBillet = -montantBillet;
+            throw new IllegalArgumentException("le nombre de montant Billet doit etre un entier positif");
        else
            this.montantBillet = montantBillet;
     }
@@ -70,11 +70,6 @@ public class Joueur {
         return proprietesPossede;
     }
 
-    public void setProprietesPossede(ArrayList<Propriete> proprietesPossede) {
-        if (proprietesPossede == null)
-            throw new IllegalArgumentException("ArrayList ne doit pas etre null");
-        this.proprietesPossede = proprietesPossede;
-    }
 
     //--------------------METHODES METIERS-----------------------------//
 
