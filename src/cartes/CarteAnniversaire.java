@@ -1,17 +1,14 @@
 package cartes;
 
+import cases.CategorieCarte;
 import joueur.Joueur;
 
-public class CarteAnniversaire extends Carte{
+public class CarteAnniversaire extends Carte {
 
     private int montantParJoueur;
 
-    public CarteAnniversaire(String enonce) {
-        super(enonce);
-    }
-
-    public CarteAnniversaire(String enonce, int montantParJoueur) {
-        super(enonce);
+    public CarteAnniversaire(String enonce, int montantParJoueur, CategorieCarte categorie) {
+        super(enonce, categorie);
         setMontantParJoueur(montantParJoueur);
     }
 
@@ -20,9 +17,8 @@ public class CarteAnniversaire extends Carte{
     }
 
     public void setMontantParJoueur(int montantParJoueur) {
-
-        if(montantParJoueur<0)
-            throw new IllegalArgumentException("le montant par joueur doit etre un entier positif");
+        if (montantParJoueur < 0)
+            throw new IllegalArgumentException("montantParJoueur doit etre un entier positif.");
         else
             this.montantParJoueur = montantParJoueur;
     }
@@ -31,4 +27,5 @@ public class CarteAnniversaire extends Carte{
     public void actionCarte(Joueur J) {
 
     }
+
 }

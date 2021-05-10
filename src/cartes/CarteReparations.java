@@ -1,17 +1,14 @@
 package cartes;
 
-public class CarteReparations extends CartePayerRecevoir{
+import cases.CategorieCarte;
+
+public class CarteReparations extends CartePayerRecevoir {
 
     private int montantMaison;
 
-    public CarteReparations(String enonce) {
-        super(enonce);
-    }
-
-    public CarteReparations(String enonce, int montantMaison) {
-        super(enonce);
+    public CarteReparations(String enonce, int montantMaison, CategorieCarte categorie) {
+        super(enonce, categorie);
         setMontantMaison(montantMaison);
-
     }
 
     public int getMontantMaison() {
@@ -19,9 +16,10 @@ public class CarteReparations extends CartePayerRecevoir{
     }
 
     public void setMontantMaison(int montantMaison) {
-        if(montantMaison < 0)
-            throw new IllegalArgumentException("le montant de la maison doit etre un entier positif");
+        if (montantMaison < 0)
+            throw new IllegalArgumentException("montantMaison doit etre un entier positif.");
         else
             this.montantMaison = montantMaison;
     }
+
 }

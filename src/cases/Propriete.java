@@ -1,6 +1,5 @@
 package cases;
 
-
 import joueur.Joueur;
 
 public class Propriete extends Case {
@@ -8,14 +7,14 @@ public class Propriete extends Case {
     private int prix;
     private Joueur proprietaire;
 
-    public Propriete(int id, String nom , int prix , Joueur proprietaire) {
+    public Propriete(int id, String nom, int prix, Joueur proprietaire) {
         super(id, nom);
         setPrix(prix);
         setProprietaire(proprietaire);
     }
 
     public Propriete(int id, String nom) {
-        super(id , nom);
+        super(id, nom);
     }
 
     public int getPrix() {
@@ -23,7 +22,7 @@ public class Propriete extends Case {
     }
 
     public void setPrix(int prix) {
-        if(prix < 0)
+        if (prix < 0)
             this.prix = -prix;
         else
             this.prix = prix;
@@ -34,22 +33,19 @@ public class Propriete extends Case {
     }
 
     public void setProprietaire(Joueur proprietaire) {
-        if(proprietaire == null)
-            throw new IllegalArgumentException("l'objet Joueur doit pas etre null");
+        if (proprietaire == null)
+            throw new IllegalArgumentException("L'objet Joueur ne peut valoir null.");
         else
             this.proprietaire = proprietaire;
     }
 
-
-    //---------------Methode metier---------------//
-
     @Override
-    public void action() {
+    public void action(Joueur joueur) {
 
     }
 
-    public int calculerLoyer() // a completer
-    {
+    public int calculerLoyer() {
         return 0;
     }
+
 }

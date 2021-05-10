@@ -1,15 +1,16 @@
 package cartes;
 
-import cases.*;
+import cases.Case;
+import cases.CategorieCarte;
 import joueur.Joueur;
 
-public abstract class CarteDeplacement extends Carte{
+public abstract class CarteDeplacement extends Carte {
 
     private boolean caseDepart;
 
-    public CarteDeplacement(String enonce , boolean caseDepart) {
-        super(enonce);
-        this.caseDepart=caseDepart;
+    public CarteDeplacement(String enonce, boolean caseDepart, CategorieCarte categorie) {
+        super(enonce, categorie);
+        setCaseDepart(caseDepart);
     }
 
     public boolean isCaseDepart() {
@@ -20,13 +21,11 @@ public abstract class CarteDeplacement extends Carte{
         this.caseDepart = caseDepart;
     }
 
-    public Case determinerCase() // a finir
-    {
-        return new CaseParkingGratuit();
-    }
+    public abstract Case determinerCase();
 
     @Override
     public void actionCarte(Joueur J) {
 
     }
+
 }

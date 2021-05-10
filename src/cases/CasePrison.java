@@ -1,8 +1,16 @@
 package cases;
 
-public class CasePrison extends Case{
+import joueur.Joueur;
+
+public class CasePrison extends Case {
+
+    public CasePrison(int id, String nom) {
+        super(id, nom);
+    }
+
     @Override
-    public void action() {
+    public void action(Joueur joueur) {
 
     }
+
 }

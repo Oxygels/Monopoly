@@ -1,11 +1,18 @@
 package cases;
 
-public class CasePioche extends Case{
+import joueur.Joueur;
 
-    private CategoriePile categorie;
+public class CasePioche extends Case {
+
+    private CategorieCarte categorie;
+
+    public CasePioche(int id, String nom) {
+        super(id, nom);
+    }
 
     @Override
-    public void action() {
+    public void action(Joueur joueur) {
 
     }
+
 }

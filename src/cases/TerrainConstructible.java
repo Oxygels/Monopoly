@@ -1,18 +1,18 @@
 package cases;
 
-public class TerrainConstructible extends  Propriete{
+public class TerrainConstructible extends Propriete {
 
-    private  int nbMaison;
+    private int nbMaison;
     private int nbHotel;
 
-    public TerrainConstructible(int id, String nom , int nbHotel , int nbMaison) {
+    public TerrainConstructible(int id, String nom, int nbHotel, int nbMaison) {
         super(id, nom);
         setNbHotel(nbHotel);
         setNbMaison(nbMaison);
     }
-    public TerrainConstructible(int id, String nom ) {
-        super(id, nom);
 
+    public TerrainConstructible(int id, String nom) {
+        super(id, nom);
     }
 
     public int getNbMaison() {
@@ -20,7 +20,7 @@ public class TerrainConstructible extends  Propriete{
     }
 
     public void setNbMaison(int nbMaison) {
-        if(nbMaison<0)
+        if (nbMaison < 0)
             this.nbMaison = -nbMaison;
         else
             this.nbMaison = nbMaison;
@@ -32,7 +32,7 @@ public class TerrainConstructible extends  Propriete{
 
     public void setNbHotel(int nbHotel) {
         if (nbHotel < 0)
-            this.nbHotel = - nbHotel;
+            this.nbHotel = -nbHotel;
         else
             this.nbHotel = nbHotel;
     }

@@ -1,11 +1,18 @@
 package cases;
 
-public class CaseTaxe extends Case{
+import joueur.Joueur;
 
-    private  int montant;
+public class CaseTaxe extends Case {
+
+    private int montant;
+
+    public CaseTaxe(int id, String nom) {
+        super(id, nom);
+    }
 
     @Override
-    public void action() {
+    public void action(Joueur joueur) {
 
     }
+
 }

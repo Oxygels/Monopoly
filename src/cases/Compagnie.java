@@ -8,8 +8,8 @@ public class Compagnie extends Propriete {
         super(id, nom);
     }
 
-    public Compagnie(int id , String nom , int coefficient){
-        super(id,nom);
+    public Compagnie(int id, String nom, int coefficient) {
+        super(id, nom);
         setCoefficient(coefficient);
     }
 
@@ -18,9 +18,10 @@ public class Compagnie extends Propriete {
     }
 
     public void setCoefficient(int coefficient) {
-        if(coefficient < 0)
+        if (coefficient < 0)
             this.coefficient = -coefficient;
         else
             this.coefficient = coefficient;
     }
+
 }

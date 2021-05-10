@@ -1,16 +1,17 @@
 package cartes;
 
+import cases.CategorieCarte;
 import joueur.Joueur;
 
-public class CartePayerRecevoir extends Carte{
+public abstract class CartePayerRecevoir extends Carte {
 
-
-    public CartePayerRecevoir(String enonce) {
-        super(enonce);
+    public CartePayerRecevoir(String enonce, CategorieCarte categorie) {
+        super(enonce, categorie);
     }
 
     @Override
     public void actionCarte(Joueur J) {
 
     }
+
 }
