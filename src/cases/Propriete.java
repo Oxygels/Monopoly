@@ -13,10 +13,6 @@ public class Propriete extends Case {
         setProprietaire(proprietaire);
     }
 
-    public Propriete(int id, String nom) {
-        super(id, nom);
-    }
-
     public int getPrix() {
         return prix;
     }
@@ -33,9 +29,6 @@ public class Propriete extends Case {
     }
 
     public void setProprietaire(Joueur proprietaire) {
-        if (proprietaire == null)
-            throw new IllegalArgumentException("L'objet Joueur ne peut valoir null.");
-        else
             this.proprietaire = proprietaire;
     }
 

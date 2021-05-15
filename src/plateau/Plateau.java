@@ -3,7 +3,6 @@ package plateau;
 import cartes.Carte;
 import cases.Case;
 import cases.CategorieCarte;
-import cases.Propriete;
 import joueur.Joueur;
 
 import java.util.ArrayList;
@@ -12,18 +11,15 @@ import java.util.Stack;
 
 public class Plateau {
 
-    private int valeurParcGratuit;
-    private int dernierLancerDes;
-    private int indiceJoueurTour;
-    private ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
-    private Stack<Carte> cartesChance = new Stack<Carte>();
-    private Stack<Carte> cartesCommunaute = new Stack<Carte>();
-    private ArrayList<Case> proprietesPossedees = new ArrayList<Case>();
+    private int valeurParcGratuit = 0;
+    private int dernierLancerDes = 0;
+    private int indiceJoueurTour = -1;
+    private final ArrayList<Joueur> joueurs = new ArrayList<>();
+    private final Stack<Carte> cartesChance = new Stack<>();
+    private final Stack<Carte> cartesCommunaute = new Stack<>();
+    private final ArrayList<Case> cases = new ArrayList<>();
 
-    private Plateau(int valeurParcGratuit, int dernierLancerDes, int indiceJoueurTour) {
-        setValeurParcGratuit(valeurParcGratuit);
-        setDernierLancerDes(dernierLancerDes);
-        setIndiceJoueurTour(indiceJoueurTour);
+    private Plateau() {
     }
 
     public int getValeurParcGratuit() {
@@ -54,8 +50,8 @@ public class Plateau {
         return cartesChance.size() + cartesCommunaute.size();
     }
 
-    public ArrayList<Case> getProprietesPossedees() {
-        return proprietesPossedees;
+    public ArrayList<Case> getCases() {
+        return cases;
     }
 
     public Joueur getJoueurCourant() {
@@ -63,7 +59,7 @@ public class Plateau {
     }
 
     public int getNbCases() {
-        return proprietesPossedees.size();
+        return cases.size();
     }
 
     public int getNbJoueurs() {
@@ -85,7 +81,7 @@ public class Plateau {
     }
 
     public void setIndiceJoueurTour(int indiceJoueurTour) {
-        if (indiceJoueurTour < 0)
+        if (indiceJoueurTour < -1)
             throw new IllegalArgumentException("joueurTour doit etre un entier positif.");
         else
             this.indiceJoueurTour = indiceJoueurTour;
@@ -114,20 +110,20 @@ public class Plateau {
             joueurs.remove(joueur);
     }
 
-    public void ajouterCase(Propriete caseAchetable) {
+    public void ajouterCase(Case caseAchetable) {
         if (caseAchetable == null)
             throw new IllegalArgumentException("caseAchetable ne peut valoir null.");
         else
-            proprietesPossedees.add(caseAchetable);
+            cases.add(caseAchetable);
     }
 
-    public void retirerCase(Propriete caseAchetable) {
+    public void retirerCase(Case caseAchetable) {
         if (caseAchetable == null)
             throw new IllegalArgumentException("caseAchetable ne peut valoir null.");
-        else if (!proprietesPossedees.contains(caseAchetable))
+        else if (!cases.contains(caseAchetable))
             throw new IllegalArgumentException("caseAchetable ne peut etre retiree si elle n'existe pas");
         else
-            proprietesPossedees.remove(caseAchetable);
+            cases.remove(caseAchetable);
     }
 
     public void ajouterCarte(Carte carte) {
@@ -164,9 +160,9 @@ public class Plateau {
 
     private static Plateau plateau;
 
-    public Plateau getPlateau() {
+    public static Plateau getPlateau() {
         if (plateau == null)
-            plateau = new Plateau(valeurParcGratuit, dernierLancerDes, indiceJoueurTour);
+            plateau = new Plateau();
 
         return plateau;
     }
