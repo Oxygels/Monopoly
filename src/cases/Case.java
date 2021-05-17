@@ -1,5 +1,6 @@
 package cases;
 
+import exception.MonopolyException;
 import joueur.Joueur;
 
 public abstract class Case {
@@ -31,6 +32,6 @@ public abstract class Case {
             this.nom = nom;
     }
 
-    public abstract void action(Joueur joueur);
+    public abstract void action(Joueur joueur) throws MonopolyException;
 
 }

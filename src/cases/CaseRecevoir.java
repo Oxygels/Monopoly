@@ -10,6 +10,7 @@ public abstract class CaseRecevoir extends CasePayerRecevoir {
 
     @Override
     public void action(Joueur joueur) {
-        //TODO: Simplement recevoir de l'argent
+        joueur.gagnerArgent(getMontant());
     }
+
 }

@@ -1,6 +1,8 @@
 package cases;
 
+import cartes.CategorieCarte;
 import joueur.Joueur;
+import plateau.Plateau;
 
 public class CasePiocheCommunaute extends CasePioche {
 
@@ -10,6 +12,7 @@ public class CasePiocheCommunaute extends CasePioche {
 
     @Override
     public void action(Joueur joueur) {
-        //TODO: Piocher dans Communaute
+        Plateau.getPlateau().piocherCarte(CategorieCarte.Communaute);
     }
+
 }

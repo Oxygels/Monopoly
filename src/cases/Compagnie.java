@@ -1,5 +1,7 @@
 package cases;
 
+import plateau.Plateau;
+
 public class Compagnie extends Propriete {
 
     public Compagnie(int id, String nom, int prix) {
@@ -8,10 +10,31 @@ public class Compagnie extends Propriete {
 
     @Override
     public int calculerLoyer() {
-        // TODO: Utiliser le dernier lancer de dé et le coefficient (selon si le joueur a 1 ou 2 compagnies)
-        // Pas besoin de paramètre coefficient il est constant dans les règles du jeu
-        // 4 si le joueur a une compagnie
-        // 10 si il en a 2
-        return 0;
+        int loyer = 0;
+
+        Plateau plateau = Plateau.getPlateau();
+
+        int nbCompagniesPossedees = (int) plateau
+                .getJoueurCourant()
+                .getProprietesPossedees()
+                .stream()
+                .filter(p -> p.getNom().equals("COMPAGNIE"))
+                .count();
+
+        switch (nbCompagniesPossedees) {
+            case 1:
+                loyer = plateau.getDernierLancerDes() * 4;
+                break;
+
+            case 2:
+                loyer = plateau.getDernierLancerDes() * 10;
+                break;
+
+            default:
+                break;
+        }
+
+        return loyer;
     }
+
 }

@@ -15,7 +15,9 @@ public class CaseParkingGratuit extends CaseRecevoir {
 
     @Override
     public void action(Joueur joueur) {
-        // TODO: a faire
+        int valeurParcGratuit = Plateau.getPlateau().getValeurParcGratuit();
+
+        joueur.gagnerArgent(valeurParcGratuit);
     }
 
 }

@@ -67,14 +67,29 @@ public class TerrainConstructible extends Propriete {
 
     public void ajouterMaison() throws MonopolyException {
         if (nbMaison == 5)
-            throw new MonopolyException("On ne peut plus acheter quand on a deja un hotel");
+            throw new MonopolyException("On ne peut plus acheter quand on possede deja un hotel.");
+
         nbMaison++;
     }
 
-
     @Override
     public int calculerLoyer() {
-        // TODO
-        return 0;
+        switch (getNbMaison()) {
+            case 0:
+                return getLoyerNu();
+            case 1:
+                return getLoyer1Maison();
+            case 2:
+                return getLoyer2Maisons();
+            case 3:
+                return getLoyer3Maisons();
+            case 4:
+                return getLoyer4Maisons();
+            case 5:
+                return getLoyerHotel();
+            default:
+                return getLoyerNu();
+        }
     }
+
 }

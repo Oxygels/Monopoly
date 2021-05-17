@@ -1,6 +1,8 @@
 package cases;
 
+import exception.ArgentException;
 import joueur.Joueur;
+import plateau.Plateau;
 
 public abstract class Propriete extends Case {
 
@@ -11,6 +13,10 @@ public abstract class Propriete extends Case {
         super(id, nom);
         setPrix(prix);
         setProprietaire(proprietaire);
+    }
+
+    public Propriete(int id, String nom) {
+        super(id, nom);
     }
 
     public int getPrix() {
@@ -33,8 +39,14 @@ public abstract class Propriete extends Case {
     }
 
     @Override
-    public void action(Joueur joueur) {
+    public void action(Joueur joueur) throws ArgentException {
+        if (!getProprietaire().equals(joueur))
+            joueur.payer(calculerLoyer(), getProprietaire());
+        else if (getProprietaire().equals(null)) {
+            Plateau plateau = Plateau.getPlateau();
 
+            joueur.acheterPropriete((Propriete) plateau.getCases().get(joueur.getPosition()), getProprietaire());
+        }
     }
 
     public abstract int calculerLoyer();

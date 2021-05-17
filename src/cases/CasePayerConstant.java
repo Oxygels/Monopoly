@@ -1,6 +1,7 @@
 package cases;
 
 public class CasePayerConstant extends CasePayer {
+
     private int montant;
 
     public CasePayerConstant(int id, String nom, int montant) {
@@ -15,7 +16,9 @@ public class CasePayerConstant extends CasePayer {
 
     private void setMontant(int montant) {
         if (montant < 0)
-            throw new IllegalArgumentException("Montant negatif");
+            throw new IllegalArgumentException("Le montant ne peut etre negatif.");
+
         this.montant = montant;
     }
+
 }

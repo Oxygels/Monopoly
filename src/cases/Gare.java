@@ -1,5 +1,7 @@
 package cases;
 
+import plateau.Plateau;
+
 public class Gare extends Propriete {
 
     public Gare(int id, String nom, int prix) {
@@ -8,8 +10,15 @@ public class Gare extends Propriete {
 
     @Override
     public int calculerLoyer() {
-        // TODO, selon le discord YLBPO c'est bien la règle des 50
-        // (50 * nombre de gare possédées)
-        return 0;
+        Plateau plateau = Plateau.getPlateau();
+        int nbGaresPossedees = (int) plateau
+                .getJoueurCourant()
+                .getProprietesPossedees()
+                .stream()
+                .filter(p -> p.getNom().equals("GARE"))
+                .count();
+
+        return 50 * nbGaresPossedees;
     }
+
 }

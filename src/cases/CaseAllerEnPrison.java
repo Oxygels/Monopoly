@@ -12,11 +12,13 @@ public class CaseAllerEnPrison extends Case {
     @Override
     public void action(Joueur joueur) {
         Plateau plateau = Plateau.getPlateau();
+
         Case prison = plateau.getCases()
                 .stream()
                 .filter(c -> c.getNom().equals("PRISON"))
                 .findAny()
                 .get();
+
         joueur.seDeplacer(prison.getId());
     }
 
