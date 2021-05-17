@@ -1,6 +1,10 @@
 package cartes;
 
+import exception.ArgentException;
 import joueur.Joueur;
+import plateau.Plateau;
+
+import java.util.ArrayList;
 
 public class CarteAnniversaire extends Carte {
 
@@ -23,8 +27,13 @@ public class CarteAnniversaire extends Carte {
     }
 
     @Override
-    public void actionCarte(Joueur J) {
+    public void actionCarte(Joueur J) throws ArgentException {
+        ArrayList<Joueur> players = Plateau.getPlateau().getJoueurs();
 
+        for(Joueur j : players){
+            if(!j.equals(J))
+                j.payer(montantParJoueur, J);
+        }
     }
 
 }

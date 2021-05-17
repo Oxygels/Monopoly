@@ -1,6 +1,8 @@
 package cartes;
 
 import cases.Case;
+import joueur.Joueur;
+import plateau.Plateau;
 
 public class CarteAvancerReculer extends CarteDeplacement {
 
@@ -21,8 +23,19 @@ public class CarteAvancerReculer extends CarteDeplacement {
 
     @Override
     public Case getDestination() {
-        //TODO
-        return null;
+        Joueur j = Plateau.getPlateau().getJoueurCourant();
+        int nombrebCases = Plateau.getPlateau().getNbCases();
+        int position = j.getPosition();
+
+        if(position + deplacement > nombrebCases)
+            setCaseDepart(true);
+
+
+        position = (position + deplacement) % nombrebCases;
+        //j.seDeplacer(position);
+
+        return Plateau.getPlateau().getCases().get(position);
+
     }
 
 }

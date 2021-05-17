@@ -2,6 +2,7 @@ package cartes;
 
 import cases.Case;
 import joueur.Joueur;
+import plateau.Plateau;
 
 public abstract class CarteDeplacement extends Carte {
 
@@ -25,7 +26,11 @@ public abstract class CarteDeplacement extends Carte {
     @Override
     public void actionCarte(Joueur J) {
         // TODO: Verifier caseDepart
-        J.seDeplacer(getDestination().getId());
-    }
 
+        J.seDeplacer(getDestination().getId());
+
+        if(caseDepart == true) {
+                J.gagnerArgent(200);
+        }
+    }
 }

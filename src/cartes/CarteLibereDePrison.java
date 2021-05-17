@@ -1,6 +1,11 @@
 package cartes;
 
+import cases.Case;
+import exception.MonopolyException;
 import joueur.Joueur;
+import plateau.Plateau;
+
+import java.util.ArrayList;
 
 public class CarteLibereDePrison extends Carte {
 
@@ -16,7 +21,18 @@ public class CarteLibereDePrison extends Carte {
     }
 
     @Override
-    public void actionCarte(Joueur J) {
+    public void actionCarte(Joueur J) throws MonopolyException {
+        ArrayList<Case> cases = Plateau.getPlateau().getCases();
 
+        if(! cases.get(J.getPosition()).getNom().equals("PRISON"))
+            throw new MonopolyException("Le joueur n'est pas en prison , il ne peut pas utiliser cette carte");
+        int i;
+        for( i = 0 ; i < cases.size() ; i++)
+        {
+            if(cases.get(i).getNom().equals("SIMPLE VISITE"))
+                break;
+        }
+
+        J.setPosition(i);
     }
 }

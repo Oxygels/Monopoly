@@ -1,5 +1,7 @@
 package cartes;
 
+import exception.ArgentException;
+import exception.MonopolyException;
 import joueur.Joueur;
 
 public abstract class Carte {
@@ -18,6 +20,6 @@ public abstract class Carte {
         return enonce;
     }
 
-    public abstract void actionCarte(Joueur J);
+    public abstract void actionCarte(Joueur J) throws MonopolyException;
 
 }

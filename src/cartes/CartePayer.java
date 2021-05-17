@@ -1,5 +1,6 @@
 package cartes;
 
+import exception.ArgentException;
 import joueur.Joueur;
 
 public abstract class CartePayer extends CartePayerRecevoir {
@@ -9,7 +10,9 @@ public abstract class CartePayer extends CartePayerRecevoir {
     }
 
     @Override
-    public void actionCarte(Joueur J) {
-        // TODO: Tu peux récupérer le montant et faire payer le joueur j
+    public void actionCarte(Joueur J) throws ArgentException {
+
+        int montant = getMontant();
+        J.payerBanque(montant,false);
     }
 }

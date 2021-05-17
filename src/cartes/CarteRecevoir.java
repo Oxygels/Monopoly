@@ -10,6 +10,8 @@ public abstract class CarteRecevoir extends CartePayerRecevoir {
 
     @Override
     public void actionCarte(Joueur J) {
-        // TODO: Tu peux récupérer le montant et faire recevoir le joueur j
+
+        int montant = getMontant();
+        J.gagnerArgent(montant);
     }
 }
