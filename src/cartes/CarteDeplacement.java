@@ -1,15 +1,14 @@
 package cartes;
 
 import cases.Case;
-import cases.CategorieCarte;
 import joueur.Joueur;
 
 public abstract class CarteDeplacement extends Carte {
 
     private boolean caseDepart;
 
-    public CarteDeplacement(String enonce, boolean caseDepart, CategorieCarte categorie) {
-        super(enonce, categorie);
+    public CarteDeplacement(String enonce, boolean caseDepart) {
+        super(enonce);
         setCaseDepart(caseDepart);
     }
 
@@ -21,11 +20,12 @@ public abstract class CarteDeplacement extends Carte {
         this.caseDepart = caseDepart;
     }
 
-    public abstract Case determinerCase();
+    public abstract Case getDestination();
 
     @Override
     public void actionCarte(Joueur J) {
-
+        // TODO: Verifier caseDepart
+        J.seDeplacer(getDestination().getId());
     }
 
 }

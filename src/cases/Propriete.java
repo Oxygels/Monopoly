@@ -2,12 +2,12 @@ package cases;
 
 import joueur.Joueur;
 
-public class Propriete extends Case {
+public abstract class Propriete extends Case {
 
     private int prix;
-    private Joueur proprietaire;
+    private Joueur proprietaire = null;
 
-    public Propriete(int id, String nom, int prix, Joueur proprietaire) {
+    public Propriete(int id, String nom, int prix) {
         super(id, nom);
         setPrix(prix);
         setProprietaire(proprietaire);
@@ -37,8 +37,6 @@ public class Propriete extends Case {
 
     }
 
-    public int calculerLoyer() {
-        return 0;
-    }
+    public abstract int calculerLoyer();
 
 }

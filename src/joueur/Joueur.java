@@ -13,9 +13,9 @@ import java.util.Stack;
 public class Joueur {
 
     private final ArrayList<Propriete> proprietesPossedees = new ArrayList<Propriete>();
+    private final Stack<CarteLibereDePrison> cartesLibPrison = new Stack<CarteLibereDePrison>();
     private String nom;
     private int position;
-    private final Stack<CarteLibereDePrison> cartesLibPrison = new Stack<CarteLibereDePrison>();
     private int montantBillet;
 
     public Joueur(String nom) {
@@ -197,6 +197,8 @@ public class Joueur {
                     && ((TerrainConstructible) c).getCouleur() == T.getCouleur()
                     && ((TerrainConstructible) c).getProprietaire() != this;
         });
+
+        // TODO: Il faut rajouter la maison sur la propriété
     }
 
     public void vendreMaison(TerrainConstructible T) throws MonopolyException {
@@ -208,6 +210,7 @@ public class Joueur {
         if (T.getNbMaison() <= 0)
             throw new MonopolyException("Pas de maison a vendre sur le terrain");
         gagnerArgent(T.getPrix() / 2);
-        T.setNbMaison(T.getNbMaison() - 1);
+
+        // TODO: Il faut retirer la maison
     }
 }

@@ -1,11 +1,10 @@
 package cases;
 
-import joueur.Joueur;
+import exception.MonopolyException;
 
 public class TerrainConstructible extends Propriete {
 
     private int nbMaison;
-    private int nbHotel;
     private final int loyerNu;
     private final int loyer1Maison;
     private final int loyer2Maisons;
@@ -13,14 +12,13 @@ public class TerrainConstructible extends Propriete {
     private final int loyer4Maisons;
     private final int loyerHotel;
     private final int prixMaison;
-    private final CouleurCase couleur;
+    private final String couleur;
 
-    public TerrainConstructible(int id, String nom, int prix, Joueur proprietaire, int loyerNu,
+    public TerrainConstructible(int id, String nom, int prix, int loyerNu,
                                 int loyer1Maison, int loyer2Maisons, int loyer3Maisons, int loyer4Maisons,
-                                int loyerHotel, int prixMaison, CouleurCase couleur) {
-        super(id, nom, prix, proprietaire);
+                                int loyerHotel, int prixMaison, String couleur) {
+        super(id, nom, prix);
         this.nbMaison = 0;
-        this.nbHotel = 0;
         this.loyerNu = loyerNu;
         this.loyer1Maison = loyer1Maison;
         this.loyer2Maisons = loyer2Maisons;
@@ -31,7 +29,7 @@ public class TerrainConstructible extends Propriete {
         this.couleur = couleur;
     }
 
-    public CouleurCase getCouleur() {
+    public String getCouleur() {
         return couleur;
     }
 
@@ -67,21 +65,16 @@ public class TerrainConstructible extends Propriete {
         return nbMaison;
     }
 
-    public void setNbMaison(int nbMaison) {
-        if (nbMaison < 0)
-            this.nbMaison = -nbMaison;
-        else
-            this.nbMaison = nbMaison;
+    public void ajouterMaison() throws MonopolyException {
+        if (nbMaison == 5)
+            throw new MonopolyException("On ne peut plus acheter quand on a deja un hotel");
+        nbMaison++;
     }
 
-    public int getNbHotel() {
-        return nbHotel;
-    }
 
-    public void setNbHotel(int nbHotel) {
-        if (nbHotel < 0)
-            this.nbHotel = -nbHotel;
-        else
-            this.nbHotel = nbHotel;
+    @Override
+    public int calculerLoyer() {
+        // TODO
+        return 0;
     }
 }

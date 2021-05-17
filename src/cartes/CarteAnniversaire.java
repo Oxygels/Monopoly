@@ -1,14 +1,13 @@
 package cartes;
 
-import cases.CategorieCarte;
 import joueur.Joueur;
 
 public class CarteAnniversaire extends Carte {
 
     private int montantParJoueur;
 
-    public CarteAnniversaire(String enonce, int montantParJoueur, CategorieCarte categorie) {
-        super(enonce, categorie);
+    public CarteAnniversaire(String enonce, int montantParJoueur) {
+        super(enonce);
         setMontantParJoueur(montantParJoueur);
     }
 

@@ -1,8 +1,8 @@
 package plateau;
 
 import cartes.Carte;
+import cartes.CategorieCarte;
 import cases.Case;
-import cases.CategorieCarte;
 import joueur.Joueur;
 
 import java.util.ArrayList;
@@ -11,27 +11,56 @@ import java.util.Stack;
 
 public class Plateau {
 
-    private int valeurParcGratuit = 0;
-    private int dernierLancerDes = 0;
-    private int indiceJoueurTour = -1;
+    private static Plateau plateau;
     private final ArrayList<Joueur> joueurs = new ArrayList<>();
     private final Stack<Carte> cartesChance = new Stack<>();
     private final Stack<Carte> cartesCommunaute = new Stack<>();
     private final ArrayList<Case> cases = new ArrayList<>();
+    private int valeurParcGratuit = 0;
+    private int dernierLancerDes = 0;
+    private int indiceJoueurTour = -1;
 
     private Plateau() {
+    }
+
+    public static Plateau getPlateau() {
+        if (plateau == null)
+            plateau = new Plateau();
+
+        return plateau;
     }
 
     public int getValeurParcGratuit() {
         return valeurParcGratuit;
     }
 
+    public void setValeurParcGratuit(int valeurParcGratuit) {
+        if (valeurParcGratuit < 0)
+            throw new IllegalArgumentException("valeurParcGratuit doit etre un entier positif.");
+        else
+            this.valeurParcGratuit = valeurParcGratuit;
+    }
+
     public int getDernierLancerDes() {
         return dernierLancerDes;
     }
 
+    public void setDernierLancerDes(int dernierLancerDes) {
+        if (dernierLancerDes < 0)
+            throw new IllegalArgumentException("dernierLancerDes doit etre un entier positif.");
+        else
+            this.dernierLancerDes = dernierLancerDes;
+    }
+
     public int getIndiceJoueurTour() {
         return indiceJoueurTour;
+    }
+
+    public void setIndiceJoueurTour(int indiceJoueurTour) {
+        if (indiceJoueurTour < -1)
+            throw new IllegalArgumentException("joueurTour doit etre un entier positif.");
+        else
+            this.indiceJoueurTour = indiceJoueurTour;
     }
 
     public ArrayList<Joueur> getJoueurs() {
@@ -66,27 +95,6 @@ public class Plateau {
         return joueurs.size();
     }
 
-    public void setValeurParcGratuit(int valeurParcGratuit) {
-        if (valeurParcGratuit < 0)
-            throw new IllegalArgumentException("valeurParcGratuit doit etre un entier positif.");
-        else
-            this.valeurParcGratuit = valeurParcGratuit;
-    }
-
-    public void setDernierLancerDes(int dernierLancerDes) {
-        if (dernierLancerDes < 0)
-            throw new IllegalArgumentException("dernierLancerDes doit etre un entier positif.");
-        else
-            this.dernierLancerDes = dernierLancerDes;
-    }
-
-    public void setIndiceJoueurTour(int indiceJoueurTour) {
-        if (indiceJoueurTour < -1)
-            throw new IllegalArgumentException("joueurTour doit etre un entier positif.");
-        else
-            this.indiceJoueurTour = indiceJoueurTour;
-    }
-
     private void lancerDes() {
         Random rand = new Random();
         dernierLancerDes = rand.nextInt(11) + 2;
@@ -110,28 +118,31 @@ public class Plateau {
             joueurs.remove(joueur);
     }
 
-    public void ajouterCase(Case caseAchetable) {
-        if (caseAchetable == null)
-            throw new IllegalArgumentException("caseAchetable ne peut valoir null.");
+    public void ajouterCase(Case caseTerrain) {
+        if (caseTerrain == null)
+            throw new IllegalArgumentException("caseTerrain ne peut valoir null.");
         else
-            cases.add(caseAchetable);
+            cases.add(caseTerrain);
     }
 
-    public void retirerCase(Case caseAchetable) {
-        if (caseAchetable == null)
+    public void retirerCase(Case caseTerrain) {
+        if (caseTerrain == null)
             throw new IllegalArgumentException("caseAchetable ne peut valoir null.");
-        else if (!cases.contains(caseAchetable))
+        else if (!cases.contains(caseTerrain))
             throw new IllegalArgumentException("caseAchetable ne peut etre retiree si elle n'existe pas");
         else
-            cases.remove(caseAchetable);
+            cases.remove(caseTerrain);
     }
 
-    public void ajouterCarte(Carte carte) {
-        if (carte.getCategorie() == CategorieCarte.Chance)
-            cartesChance.add(carte);
-        else if (carte.getCategorie() == CategorieCarte.Communaute)
-            cartesCommunaute.add(carte);
+    public void ajouterCarteChance(Carte carte) {
+        cartesChance.push(carte);
     }
+
+    public void ajouterCarteCommunaute(Carte carte) {
+        cartesCommunaute.push(carte);
+    }
+
+    // PATTERN SINGLETON
 
     public Carte piocherCarte(CategorieCarte categorie) {
         if (categorie == CategorieCarte.Chance)
@@ -154,16 +165,5 @@ public class Plateau {
             else
                 throw new IllegalArgumentException("La carte a retirer n'existe pas.");
         }
-    }
-
-    // PATTERN SINGLETON
-
-    private static Plateau plateau;
-
-    public static Plateau getPlateau() {
-        if (plateau == null)
-            plateau = new Plateau();
-
-        return plateau;
     }
 }

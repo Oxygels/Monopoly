@@ -1,17 +1,17 @@
 package cartes;
 
 import cases.Case;
-import cases.CategorieCarte;
 
 public class CarteAllerA extends CarteDeplacement {
 
     private Case destination;
 
-    public CarteAllerA(String enonce, boolean caseDepart, Case destination, CategorieCarte categorie) {
-        super(enonce, caseDepart, categorie);
+    public CarteAllerA(String enonce, boolean caseDepart, Case destination) {
+        super(enonce, caseDepart);
         setDestination(destination);
     }
 
+    @Override
     public Case getDestination() {
         return destination;
     }
@@ -22,10 +22,4 @@ public class CarteAllerA extends CarteDeplacement {
         else
             this.destination = destination;
     }
-
-    @Override
-    public Case determinerCase() {
-        return null;
-    }
-
 }
