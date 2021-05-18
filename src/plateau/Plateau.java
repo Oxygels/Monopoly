@@ -3,6 +3,8 @@ package plateau;
 import cartes.Carte;
 import cartes.CategorieCarte;
 import cases.Case;
+import cases.Propriete;
+import cases.TerrainConstructible;
 import joueur.Joueur;
 
 import java.util.ArrayList;
@@ -31,6 +33,21 @@ public class Plateau {
         return plateau;
     }
 
+    public void init() {
+        valeurParcGratuit = 0;
+        dernierLancerDes = 0;
+        indiceJoueurTour = -1;
+        joueurs.clear();
+        cases.forEach(c -> {
+            if (c instanceof Propriete) {
+                ((Propriete) (c)).setProprietaire(null);
+                if (c instanceof TerrainConstructible) {
+                    ((TerrainConstructible) c).init();
+                }
+            }
+        });
+    }
+
     public int getValeurParcGratuit() {
         return valeurParcGratuit;
     }
@@ -45,6 +62,7 @@ public class Plateau {
     public int getDernierLancerDes() {
         return dernierLancerDes;
     }
+
 
     public void setDernierLancerDes(int dernierLancerDes) {
         if (dernierLancerDes < 0)

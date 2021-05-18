@@ -14,7 +14,7 @@ public class ParserCaseSimpleVisite extends Parser {
         String[] fields = ligne.split(";");
         Plateau.getPlateau().ajouterCase(new CaseSimpleVisite(
                 Integer.parseInt(fields[0]),
-                "Simple Visite"
+                "Simple visite"
         ));
     }
 

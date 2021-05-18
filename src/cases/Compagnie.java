@@ -10,31 +10,22 @@ public class Compagnie extends Propriete {
 
     @Override
     public int calculerLoyer() {
-        int loyer = 0;
-
         Plateau plateau = Plateau.getPlateau();
-
-        int nbCompagniesPossedees = (int) plateau
-                .getJoueurCourant()
+        // Si on calcule le loyer alors forcément il y a un propriétaire
+        int nbCompagniesPossedees = (int) getProprietaire()
                 .getProprietesPossedees()
                 .stream()
-                .filter(p -> p.getNom().contains("Compagnie"))
+                .filter(p -> p instanceof Compagnie)
                 .count();
 
         switch (nbCompagniesPossedees) {
             case 1:
-                loyer = plateau.getDernierLancerDes() * 4;
-                break;
-
+                return plateau.getDernierLancerDes() * 4;
             case 2:
-                loyer = plateau.getDernierLancerDes() * 10;
-                break;
-
+                return plateau.getDernierLancerDes() * 10;
             default:
-                break;
+                return 0;
         }
-
-        return loyer;
     }
 
 }

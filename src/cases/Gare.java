@@ -11,11 +11,11 @@ public class Gare extends Propriete {
     @Override
     public int calculerLoyer() {
         Plateau plateau = Plateau.getPlateau();
-        int nbGaresPossedees = (int) plateau
-                .getJoueurCourant()
+        // Si on calcule le loyer alors forcément il y a un propriétaire
+        int nbGaresPossedees = (int) getProprietaire()
                 .getProprietesPossedees()
                 .stream()
-                .filter(p -> p.getNom().equals("GARE"))
+                .filter(p -> p instanceof Gare)
                 .count();
 
         return 50 * nbGaresPossedees;

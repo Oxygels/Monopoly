@@ -14,7 +14,7 @@ public class ParserCaseAllerEnPrison extends Parser {
         String[] fields = ligne.split(";");
         Plateau.getPlateau().ajouterCase(new CaseAllerEnPrison(
                 Integer.parseInt(fields[0]),
-                "Allez en Prison"
+                "Allez en prison"
         ));
     }
 

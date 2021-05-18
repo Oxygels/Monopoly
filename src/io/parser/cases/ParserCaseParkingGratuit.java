@@ -14,7 +14,7 @@ public class ParserCaseParkingGratuit extends Parser {
         String[] fields = ligne.split(";");
         Plateau.getPlateau().ajouterCase(new CaseParkingGratuit(
                 Integer.parseInt(fields[0]),
-                fields[1]
+                "Parking Gratuit"
         ));
     }
 

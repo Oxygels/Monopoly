@@ -1,6 +1,7 @@
 package cartes;
 
 import cases.Case;
+import exception.MonopolyException;
 import joueur.Joueur;
 
 public abstract class CarteDeplacement extends Carte {
@@ -32,9 +33,9 @@ public abstract class CarteDeplacement extends Carte {
     public abstract Case getDestination();
 
     @Override
-    public void actionCarte(Joueur J) {
+    public void actionCarte(Joueur J) throws MonopolyException {
         J.seDeplacer(getDestination().getId());
-        if (caseDepart && prendEnCompteCaseDepart) {
+        if (caseDepart && prendEnCompteCaseDepart && J.getPositionCase().getNom() != "Case Départ") {
             J.gagnerArgent(200);
         }
     }

@@ -27,6 +27,6 @@ public class CarteLibereDePrison extends Carte {
         if (!cases.get(J.getPosition()).getNom().equals("Prison"))
             throw new MonopolyException("Le joueur n'est pas en prison , il ne peut pas utiliser cette carte");
 
-        J.setPosition(Plateau.getPlateau().getCase("Simple Visite").getId());
+        J.seDeplacer(Plateau.getPlateau().getCase("Simple Visite").getId());
     }
 }

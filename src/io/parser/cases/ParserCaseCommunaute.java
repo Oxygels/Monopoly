@@ -21,6 +21,6 @@ public class ParserCaseCommunaute extends Parser {
 
     @Override
     public boolean saitParser(String ligne) {
-        return ligne.matches("\\d+;CAISSE COMMUNAUTE;");
+        return ligne.matches("\\d+;CAISSE COMMUNAUTE;;;;;;;;;;");
     }
 }

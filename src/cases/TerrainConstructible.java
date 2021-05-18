@@ -29,6 +29,10 @@ public class TerrainConstructible extends Propriete {
         this.couleur = couleur;
     }
 
+    public void init() {
+        nbMaison = 0;
+    }
+
     public String getCouleur() {
         return couleur;
     }
@@ -81,6 +85,8 @@ public class TerrainConstructible extends Propriete {
     public int calculerLoyer() {
         switch (getNbMaison()) {
             case 0:
+                if (getProprietaire() != null && !getProprietaire().possedePasToutesLesCouleurs(this))
+                    return getLoyerNu() * 2;
                 return getLoyerNu();
             case 1:
                 return getLoyer1Maison();
