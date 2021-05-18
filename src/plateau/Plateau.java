@@ -6,6 +6,7 @@ import cases.Case;
 import joueur.Joueur;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Stack;
 
@@ -98,6 +99,16 @@ public class Plateau {
     private void lancerDes() {
         Random rand = new Random();
         dernierLancerDes = rand.nextInt(11) + 2;
+    }
+
+    public Case getCase(String nom) {
+        Optional<Case> caseCherchee = getCases()
+                .stream()
+                .filter(c -> c.getNom().equals(nom))
+                .findAny();
+        if (!caseCherchee.isPresent())
+            throw new IllegalArgumentException("La case spécifiée par nom n'existe pas");
+        return caseCherchee.get();
     }
 
     public void ajouterJoueur(Joueur joueur) {

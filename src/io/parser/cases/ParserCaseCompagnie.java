@@ -16,8 +16,7 @@ public class ParserCaseCompagnie extends Parser {
         Plateau.getPlateau().ajouterCase(new Compagnie(
                 Integer.parseInt(fields[0]),
                 fields[2],
-                Integer.parseInt(fields[3]),
-                null
+                Integer.parseInt(fields[3])
         ));
     }
 

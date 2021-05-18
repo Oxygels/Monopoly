@@ -10,8 +10,6 @@ public abstract class CarteRecevoir extends CartePayerRecevoir {
 
     @Override
     public void actionCarte(Joueur J) {
-
-        int montant = getMontant();
-        J.gagnerArgent(montant);
+        J.gagnerArgent(getMontant());
     }
 }

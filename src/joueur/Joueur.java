@@ -126,7 +126,7 @@ public class Joueur {
             throw new MonopolyException("Pas de carte \"Libéré de prison\" possédée");
         else {
             CarteLibereDePrison carte = cartesLibPrison.pop();
-            switch (carte.getCategorie()) {
+            switch (carte.getCategorieCarte()) {
                 // On place la carte en dessous de la pile
                 case Chance:
                     Plateau.getPlateau().getCartesChance().add(0, carte);
@@ -136,7 +136,6 @@ public class Joueur {
                     break;
             }
         }
-
     }
 
     public void vendreCarteLibPrison(int prix, Joueur j) throws MonopolyException {
@@ -165,8 +164,6 @@ public class Joueur {
         } catch (IndexOutOfBoundsException e) {
             System.err.println("Il n'y a pas de joueur sur le plateau");
         }
-
-
     }
 
     public void seDeplacer(int destination) {
@@ -187,7 +184,7 @@ public class Joueur {
         if (possedePasToutesLesCouleurs(T))
             throw new MonopolyException("On ne peut pas acheter de maison si on ne possede pas tous les terrains" +
                     "de la meme couleur");
-
+        T.ajouterMaison();
         payerBanque(T.getPrixMaison(), false);
     }
 
@@ -197,8 +194,6 @@ public class Joueur {
                     && ((TerrainConstructible) c).getCouleur() == T.getCouleur()
                     && ((TerrainConstructible) c).getProprietaire() != this;
         });
-
-        // TODO: Il faut rajouter la maison sur la propriété
     }
 
     public void vendreMaison(TerrainConstructible T) throws MonopolyException {
@@ -207,10 +202,7 @@ public class Joueur {
         if (!proprietesPossedees.contains(T))
             throw new IllegalArgumentException("On ne peut pas vendre une maison " +
                     "sur un terrain qu'on ne possede pas");
-        if (T.getNbMaison() <= 0)
-            throw new MonopolyException("Pas de maison a vendre sur le terrain");
+        T.retirerMaison();
         gagnerArgent(T.getPrix() / 2);
-
-        // TODO: Il faut retirer la maison
     }
 }

@@ -13,6 +13,6 @@ public abstract class CartePayer extends CartePayerRecevoir {
     public void actionCarte(Joueur J) throws ArgentException {
 
         int montant = getMontant();
-        J.payerBanque(montant,false);
+        J.payerBanque(montant, true);
     }
 }

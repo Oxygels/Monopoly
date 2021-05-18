@@ -15,14 +15,12 @@ public class ParserCaseGare extends Parser {
         Plateau.getPlateau().ajouterCase(new Gare(
                 Integer.parseInt(fields[0]),
                 fields[2],
-                200, // CF: Discord YLPBO
-                //TODO: Modifier la condition
-                null
+                Integer.parseInt(fields[3])
         ));
     }
 
     @Override
     public boolean saitParser(String ligne) {
-        return ligne.matches("\\d+;GARE;.+;");
+        return ligne.matches("\\d+;GARE;.+;\\d+;");
     }
 }

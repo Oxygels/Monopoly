@@ -24,15 +24,13 @@ public class CarteAvancerReculer extends CarteDeplacement {
     @Override
     public Case getDestination() {
         Joueur j = Plateau.getPlateau().getJoueurCourant();
-        int nombrebCases = Plateau.getPlateau().getNbCases();
+        int nombreCases = Plateau.getPlateau().getNbCases();
         int position = j.getPosition();
 
-        if(position + deplacement > nombrebCases)
-            setCaseDepart(true);
+        setCaseDepart(position + deplacement >= nombreCases);
 
-
-        position = (position + deplacement) % nombrebCases;
-        //j.seDeplacer(position);
+        // On ne prend pas en compte la case Prison
+        position = (position + deplacement) % (nombreCases - 1);
 
         return Plateau.getPlateau().getCases().get(position);
 

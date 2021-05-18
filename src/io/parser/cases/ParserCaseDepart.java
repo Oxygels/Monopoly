@@ -1,6 +1,8 @@
 package io.parser.cases;
 
+import cases.CaseRecevoirConstant;
 import io.parser.Parser;
+import plateau.Plateau;
 
 public class ParserCaseDepart extends Parser {
 
@@ -11,11 +13,11 @@ public class ParserCaseDepart extends Parser {
     @Override
     public void parser(String ligne) throws Exception {
         String[] fields = ligne.split(";");
-//        Plateau.getPlateau().ajouterCase(new CaseDepart(
-//                Integer.parseInt(fields[0]),
-//                fields[1],
-//                Integer.parseInt(fields[2])));
-        // TODO: Utiliser CaseRecevoir
+        Plateau.getPlateau().ajouterCase(new CaseRecevoirConstant(
+                Integer.parseInt(fields[0]),
+                "Case Départ",
+                Integer.parseInt(fields[2])
+        ));
     }
 
     @Override

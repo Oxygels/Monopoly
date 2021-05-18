@@ -13,11 +13,7 @@ public class CaseAllerEnPrison extends Case {
     public void action(Joueur joueur) {
         Plateau plateau = Plateau.getPlateau();
 
-        Case prison = plateau.getCases()
-                .stream()
-                .filter(c -> c.getNom().equals("PRISON"))
-                .findAny()
-                .get();
+        Case prison = plateau.getCase("Prison");
 
         joueur.seDeplacer(prison.getId());
     }

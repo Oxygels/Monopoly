@@ -68,8 +68,13 @@ public class TerrainConstructible extends Propriete {
     public void ajouterMaison() throws MonopolyException {
         if (nbMaison == 5)
             throw new MonopolyException("On ne peut plus acheter quand on possede deja un hotel.");
-
         nbMaison++;
+    }
+
+    public void retirerMaison() throws MonopolyException {
+        if (nbMaison == 0)
+            throw new MonopolyException("Pas de vente de maison sur un terrain vide");
+        nbMaison--;
     }
 
     @Override

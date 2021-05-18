@@ -2,15 +2,23 @@ package cartes;
 
 import cases.Case;
 import joueur.Joueur;
-import plateau.Plateau;
 
 public abstract class CarteDeplacement extends Carte {
 
-    private boolean caseDepart;
+    private boolean caseDepart = false;
+    private boolean prendEnCompteCaseDepart;
 
-    public CarteDeplacement(String enonce, boolean caseDepart) {
+    public CarteDeplacement(String enonce, boolean prendEnCompteCaseDepart) {
         super(enonce);
-        setCaseDepart(caseDepart);
+        setPrendEnCompteCaseDepart(prendEnCompteCaseDepart);
+    }
+
+    public boolean isPrendEnCompteCaseDepart() {
+        return prendEnCompteCaseDepart;
+    }
+
+    private void setPrendEnCompteCaseDepart(boolean prendEnCompteCaseDepart) {
+        this.prendEnCompteCaseDepart = prendEnCompteCaseDepart;
     }
 
     public boolean isCaseDepart() {
@@ -25,12 +33,9 @@ public abstract class CarteDeplacement extends Carte {
 
     @Override
     public void actionCarte(Joueur J) {
-        // TODO: Verifier caseDepart
-
         J.seDeplacer(getDestination().getId());
-
-        if(caseDepart == true) {
-                J.gagnerArgent(200);
+        if (caseDepart && prendEnCompteCaseDepart) {
+            J.gagnerArgent(200);
         }
     }
 }

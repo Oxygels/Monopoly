@@ -1,19 +1,18 @@
-package io.parser.cases;
+package io.parser.cartes.communaute;
 
-import cases.CasePayerConstant;
+import cartes.CartePayerConstant;
 import io.parser.Parser;
 import plateau.Plateau;
 
-public class ParserCaseImpot extends Parser {
-    public ParserCaseImpot(Parser suivant) {
+public class ParserCarteCommunautePayer extends Parser {
+    public ParserCarteCommunautePayer(Parser suivant) {
         super(suivant);
     }
 
     @Override
     public void parser(String ligne) throws Exception {
         String[] fields = ligne.split(";");
-        Plateau.getPlateau().ajouterCase(new CasePayerConstant(
-                Integer.parseInt(fields[0]),
+        Plateau.getPlateau().ajouterCarteCommunaute(new CartePayerConstant(
                 fields[1],
                 Integer.parseInt(fields[2])
         ));
@@ -21,6 +20,6 @@ public class ParserCaseImpot extends Parser {
 
     @Override
     public boolean saitParser(String ligne) {
-        return ligne.matches("\\d+;IMPOT SUR LE REVENU;\\d+;");
+        return ligne.matches("PAYER;.+;\\d+");
     }
 }

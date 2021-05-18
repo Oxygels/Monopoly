@@ -4,8 +4,9 @@ public class CaseRecevoirConstant extends CaseRecevoir {
 
     private int montant;
 
-    public CaseRecevoirConstant(int id, String nom) {
+    public CaseRecevoirConstant(int id, String nom, int montant) {
         super(id, nom);
+        setMontant(montant);
     }
 
     @Override

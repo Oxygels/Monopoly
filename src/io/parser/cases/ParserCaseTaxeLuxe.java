@@ -1,6 +1,6 @@
 package io.parser.cases;
 
-import cases.CasePayer;
+import cases.CasePayerConstant;
 import io.parser.Parser;
 import plateau.Plateau;
 
@@ -12,10 +12,10 @@ public class ParserCaseTaxeLuxe extends Parser {
     @Override
     public void parser(String ligne) throws Exception {
         String[] fields = ligne.split(";");
-        Plateau.getPlateau().ajouterCase(new CasePayer(
+        Plateau.getPlateau().ajouterCase(new CasePayerConstant(
                 Integer.parseInt(fields[0]),
-                fields[1],
-                100 // TODO: Mettre dans le .csv
+                "Taxe de Luxe",
+                Integer.parseInt(fields[2])
         ));
     }
 

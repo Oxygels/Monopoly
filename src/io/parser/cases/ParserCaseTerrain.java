@@ -15,7 +15,7 @@ public class ParserCaseTerrain extends Parser {
         String[] fields = ligne.split(";");
         Plateau.getPlateau().ajouterCase(new TerrainConstructible(
                 Integer.parseInt(fields[0]),
-                fields[2],
+                fields[3],
                 Integer.parseInt(fields[4]),
                 Integer.parseInt(fields[6]),
                 Integer.parseInt(fields[7]),
@@ -24,7 +24,7 @@ public class ParserCaseTerrain extends Parser {
                 Integer.parseInt(fields[10]),
                 Integer.parseInt(fields[11]),
                 Integer.parseInt(fields[5]),
-                fields[3]
+                fields[2]
         ));
     }
 

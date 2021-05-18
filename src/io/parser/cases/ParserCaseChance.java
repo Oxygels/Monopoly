@@ -15,7 +15,7 @@ public class ParserCaseChance extends Parser {
         String[] fields = ligne.split(";");
         Plateau.getPlateau().ajouterCase(new CasePiocheChance(
                 Integer.parseInt(fields[0]),
-                fields[1]
+                "Chance"
         ));
     }
 

@@ -18,7 +18,7 @@ public class Compagnie extends Propriete {
                 .getJoueurCourant()
                 .getProprietesPossedees()
                 .stream()
-                .filter(p -> p.getNom().equals("COMPAGNIE"))
+                .filter(p -> p.getNom().contains("Compagnie"))
                 .count();
 
         switch (nbCompagniesPossedees) {
