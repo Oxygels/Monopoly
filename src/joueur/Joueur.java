@@ -244,4 +244,16 @@ public class Joueur {
         T.retirerMaison();
         gagnerArgent(T.getPrix() / 2);
     }
+
+    public void payerPrison() throws MonopolyException {
+        Plateau plateau = Plateau.getPlateau();
+
+        if (!getPositionCase().getNom().equals("Prison"))
+            throw new MonopolyException("Le joueur n'est pas sur la Case Prison");
+        else {
+            payerBanque(50, true);
+            seDeplacer(plateau.getCase("Simple visite").getId());
+        }
+    }
+
 }
