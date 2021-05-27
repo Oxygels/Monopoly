@@ -26,12 +26,22 @@ public class Plateau {
     private Plateau() {
     }
 
+    /**
+     * Constructeur par defaut de la classe Plateau.
+     *
+     * @return plateau qui n'est autre qu'un objet de type Plateau.
+     */
+
     public static Plateau getPlateau() {
         if (plateau == null)
             plateau = new Plateau();
 
         return plateau;
     }
+
+    /**
+     * Methode publique permettant l'initialisation d'un plateau.
+     */
 
     public void init() {
         valeurParcGratuit = 0;
@@ -114,6 +124,10 @@ public class Plateau {
         return joueurs.size();
     }
 
+    /**
+     * Methode publique permettant de simuler le lancer des deux des.
+     */
+
     private void lancerDes() {
         Random rand = new Random();
         dernierLancerDes = rand.nextInt(11) + 2;
@@ -129,6 +143,14 @@ public class Plateau {
         return caseCherchee.get();
     }
 
+    /**
+     * Methode publique permettant d'ajouter un joueur.
+     *
+     * @param joueur designant le joueur a ajouter.
+     *
+     * @see Joueur
+     */
+
     public void ajouterJoueur(Joueur joueur) {
         if (joueur == null)
             throw new IllegalArgumentException("L'objet Joueur ne peut valoir null.");
@@ -137,6 +159,14 @@ public class Plateau {
         else
             joueurs.add(joueur);
     }
+
+    /**
+     * Methode publique permettant de retirer un joueur.
+     *
+     * @param joueur designant le joueur a retirer.
+     *
+     * @see Joueur
+     */
 
     public void retirerJoueur(Joueur joueur) {
         if (joueur == null)
@@ -147,12 +177,28 @@ public class Plateau {
             joueurs.remove(joueur);
     }
 
+    /**
+     * Methode publique permettant d'ajouter une case.
+     *
+     * @param caseTerrain designant la case a ajouter.
+     *
+     * @see Case
+     */
+
     public void ajouterCase(Case caseTerrain) {
         if (caseTerrain == null)
             throw new IllegalArgumentException("caseTerrain ne peut valoir null.");
         else
             cases.add(caseTerrain);
     }
+
+    /**
+     * Methode publique permettant de retirer une case.
+     *
+     * @param caseTerrain designant la case a retirer.
+     *
+     * @see Case
+     */
 
     public void retirerCase(Case caseTerrain) {
         if (caseTerrain == null)
@@ -163,9 +209,27 @@ public class Plateau {
             cases.remove(caseTerrain);
     }
 
+    /**
+     * Methode publique permettant d'ajouter une carte Chance.
+     *
+     * @param carte designant la carte Chance a ajouter.
+     *
+     * @see Carte
+     * @see CategorieCarte
+     */
+
     public void ajouterCarteChance(Carte carte) {
         cartesChance.push(carte);
     }
+
+    /**
+     * Methode publique permettant d'ajouter une carte Communaute.
+     *
+     * @param carte designant la carte Communaute a ajouter.
+     *
+     * @see Carte
+     * @see CategorieCarte
+     */
 
     public void ajouterCarteCommunaute(Carte carte) {
         cartesCommunaute.push(carte);
@@ -173,12 +237,31 @@ public class Plateau {
 
     // PATTERN SINGLETON
 
+    /**
+     * Methode publique permettant de piocher une carte.
+     *
+     * @param categorie designant la categorie de la carte a piocher.
+     *
+     * @see Carte
+     * @see CategorieCarte
+     */
+
     public Carte piocherCarte(CategorieCarte categorie) {
         if (categorie == CategorieCarte.Chance)
             return cartesChance.pop();
         else
             return cartesCommunaute.pop();
     }
+
+    /**
+     * Methode publique permettant d'ajouter une carte Chance.
+     *
+     * @param carte designant la carte a retirer.
+     * @param categorie designant la categorie de la carte a retirer.
+     *
+     * @see Carte
+     * @see CategorieCarte
+     */
 
     public void retirerCarte(Carte carte, CategorieCarte categorie) {
         if (carte == null)
