@@ -9,6 +9,16 @@ public class CarteReparations extends CartePayer {
     private int montantMaison;
     private int montantHotel;
 
+    /**
+     * Classe Carte Reparation qui herite de la classe CartePayer.
+     * Elle permet de faire payer le joueur actuel le prix d'un hotel ou d'une maison.
+     * @param enonce Chaine de caractere qui represente le texte au dos de la carte.
+     * @param montantMaison entier naturel qui doit etre strictement positif, il represente le montant
+     *                      du prix d'une maison.
+     * @param montantHotel entier naturel qui doit etre strictement positif, il represente le montant
+     *                     du prix d'un hotel.
+     * @see CartePayer qui est la classe mere de cette classe
+     */
     public CarteReparations(String enonce, int montantMaison, int montantHotel) {
         super(enonce);
         setMontantMaison(montantMaison);
@@ -36,6 +46,7 @@ public class CarteReparations extends CartePayer {
         else
             this.montantMaison = montantMaison;
     }
+
 
     @Override
     public int getMontant() {

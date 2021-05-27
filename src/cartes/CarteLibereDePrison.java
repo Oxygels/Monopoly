@@ -12,6 +12,14 @@ public class CarteLibereDePrison extends Carte {
     // Important car le joueur devra à un moment la remettre dans la bonne pile
     private CategorieCarte categorieCarte;
 
+    /**
+     * Cette classe represente la carte Liberer de prison.
+     * Elle permet au joueur actuel de se liberer de prison si ce dernier est en prison.
+     * Le joueur va systematiquement etre deplacé vers la case "simple visite" si il sors de prison.
+     * @param enonce Chaine de caractere qui represente le texte au dos de la carte.
+     * @param categorie Important car le joueur devra à un moment la remettre dans la bonne pile.
+     * @see CategorieCarte pour comprendre a quoi cela correspond dans monopoly.
+     */
     public CarteLibereDePrison(String enonce, CategorieCarte categorie) {
         super(enonce);
     }

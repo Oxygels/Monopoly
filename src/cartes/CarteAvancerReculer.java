@@ -8,6 +8,12 @@ public class CarteAvancerReculer extends CarteDeplacement {
 
     private int deplacement;
 
+    /**
+     * Permet de faire avancer un joueur dans le plateau ou de le faire reculer de certaines cases.
+     * @param enonce Chaine de caractere qui represente le texte au dos de la carte.
+     * @param caseDepart un booleen qui permet de savoir si le joueur est dans la case depart ou pas.
+     * @param deplacement entier relatif qui permet de faire deplacer le joueur d'un certain nombre de cases.
+     */
     public CarteAvancerReculer(String enonce, boolean caseDepart, int deplacement) {
         super(enonce, caseDepart);
         setDeplacement(deplacement);
@@ -21,6 +27,12 @@ public class CarteAvancerReculer extends CarteDeplacement {
         this.deplacement = deplacement;
     }
 
+    /**
+     * Permet de savoir a quelle desitation le joueur va atterir quand on applique cette methode sur lui.
+     * on ne prends pas en compte la case prison.
+     * @return la case dans laquelle le joueur va atterir , elle est calculé par rapport a la position du joueur
+     * additionné au deplacement modulo le nombre de cases - 1.
+     */
     @Override
     public Case getDestination() {
         Joueur j = Plateau.getPlateau().getJoueurCourant();
