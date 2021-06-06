@@ -5,6 +5,7 @@ import cartes.CategorieCarte;
 import cases.Case;
 import cases.Propriete;
 import cases.TerrainConstructible;
+import exception.MonopolyException;
 import joueur.Joueur;
 
 import java.util.ArrayList;
@@ -241,16 +242,22 @@ public class Plateau {
      * Methode publique permettant de piocher une carte.
      *
      * @param categorie designant la categorie de la carte a piocher.
-     *
      * @see Carte
      * @see CategorieCarte
      */
 
-    public Carte piocherCarte(CategorieCarte categorie) {
-        if (categorie == CategorieCarte.Chance)
-            return cartesChance.pop();
-        else
-            return cartesCommunaute.pop();
+    public void piocherCarte(CategorieCarte categorie, Joueur j) throws MonopolyException {
+        if (j == null)
+            throw new IllegalArgumentException("Joueur null");
+        Carte carte;
+        if (categorie == CategorieCarte.Chance) {
+            carte = cartesChance.pop();
+            cartesChance.add(0, carte);
+        } else {
+            carte = cartesCommunaute.pop();
+            cartesCommunaute.add(0, carte);
+        }
+        carte.actionCarte(j);
     }
 
     /**

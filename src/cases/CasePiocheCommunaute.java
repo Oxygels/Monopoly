@@ -1,6 +1,7 @@
 package cases;
 
 import cartes.CategorieCarte;
+import exception.MonopolyException;
 import joueur.Joueur;
 import plateau.Plateau;
 
@@ -11,8 +12,8 @@ public class CasePiocheCommunaute extends CasePioche {
     }
 
     @Override
-    public void action(Joueur joueur) {
-        Plateau.getPlateau().piocherCarte(CategorieCarte.Communaute);
+    public void action(Joueur joueur) throws MonopolyException {
+        Plateau.getPlateau().piocherCarte(CategorieCarte.Communaute, joueur);
     }
 
 }

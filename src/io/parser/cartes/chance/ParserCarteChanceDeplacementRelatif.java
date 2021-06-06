@@ -15,7 +15,7 @@ public class ParserCarteChanceDeplacementRelatif extends Parser {
         Plateau.getPlateau().ajouterCarteChance(new CarteAvancerReculer(
                 fields[1],
                 false,
-                Integer.parseInt(fields[3])
+                Integer.parseInt(fields[2])
         ));
     }
 

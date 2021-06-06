@@ -10,7 +10,7 @@ DEPLACEMENT;Avancez jusqu'à la case départ;Case Départ
 ENCAISSER;Recevez votre revenu annuel;100
 ENCAISSER;La vente de votre stock vous rapporte;50
 DEPLACEMENT;Retournez à Belleville;Boulevard de Belleville
-DEPLACEMENT:Allez en prison ! Avancez tout droit en prison. Ne passez pas par la case départ. Ne recevez pas 200€;Prison
+DEPLACEMENT;Allez en prison ! Avancez tout droit en prison. Ne passez pas par la case départ. Ne recevez pas 200€;Prison
 ENCAISSER;Vous avez gagné le deuxième prix de beauté. Recevez 10€;10
 PAYER;Payez l'hôpital 100€;100
 LIBERATION;Vous êtes libéré de prison. Cette carte peut être conservée jusqu'à ce qu'elle soit utilisée ou vendue.

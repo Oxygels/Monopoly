@@ -11,6 +11,7 @@ public class CartePayerConstant extends CartePayer {
      */
     public CartePayerConstant(String enonce, int montant) {
         super(enonce);
+        setMontant(montant);
     }
 
     @Override

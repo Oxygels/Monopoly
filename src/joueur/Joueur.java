@@ -110,7 +110,7 @@ public class Joueur {
         if (montantBillet - montant < 0)
             throw new ArgentException("Le joueur n'a pas assez d'argent pour payer");
         if (parcGratuit) {
-            // Typiquement avec case "Taxe" ou certains cartes
+            // Typiquement avec case "Taxe" ou certaines cartes
             Plateau plateau = Plateau.getPlateau();
             plateau.setValeurParcGratuit(plateau.getValeurParcGratuit() + montant);
         }

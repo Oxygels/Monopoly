@@ -1,0 +1,32 @@
+package ui.event;
+
+import application.MonopolyGUI;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.ToggleButton;
+
+public class EventChoixJoueur implements EventHandler<ActionEvent> {
+
+    private final MonopolyGUI monopoly;
+
+
+    public EventChoixJoueur(MonopolyGUI monopoly) {
+        this.monopoly = monopoly;
+    }
+
+    @Override
+    public void handle(ActionEvent e) {
+        // Explique ce qui se passe lors du changement de joueur
+        // Rappelons que le bouton qui a trigger l'event contient le nouveau joueur courant
+        // TODO: Modifier le joueur courant
+        if (e.getSource() instanceof ToggleButton) {
+            ToggleButton b = (ToggleButton) e.getSource();
+            String j = (String) b.getUserData();
+
+            monopoly.setJoueurCourant(j);
+            monopoly.DialogInfo(monopoly.getJoueurCourant() + " doit jouer");
+
+            monopoly.getZoneProprietes().getItems().clear();
+        }
+    }
+}

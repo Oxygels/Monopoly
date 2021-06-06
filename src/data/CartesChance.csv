@@ -6,7 +6,7 @@ ENCAISSER;Votre immeuble et votre prêt rapportent. Vous devez toucher 150€;15
 DEPLACEMENT RELATIF;Reculer de trois cases;-3
 PAYER;Amende pour excès de vitesse : 15€;15
 LIBERATION;Vous êtes libéré de prison. Cette carte peut être conservée jusqu'à ce qu'elle soit utilisée ou vendue.
-DEPLACEMENT:Allez en prison ! Avancez tout droit en prison. Ne passez pas par la case départ. Ne recevez pas 200€;Prison
+DEPLACEMENT;Allez en prison ! Avancez tout droit en prison. Ne passez pas par la case départ. Ne recevez pas 200€;Prison
 ENCAISSER;Vous avez gagné le prix de mots croisés. Recevez 100€.;100
 IMPOTS;Vous êtes imposé pour les réparations de voirie à raison de : 40€ par maison et 115€ par hotel.;40;115
 REPARATIONS;Faites des réparations dans toutes vos maisons. Versez pour chaque maison 25€. Versez pour chaque hôtel 100€;25;100
