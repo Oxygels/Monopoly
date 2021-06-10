@@ -1,6 +1,8 @@
 package application;
 
 
+import cases.Propriete;
+import exception.MonopolyException;
 import javafx.application.Application;
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
@@ -15,7 +17,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import joueur.Joueur;
+import plateau.Plateau;
+import tests.*;
 import ui.FenetreTerrain;
+import ui.Pion;
 import ui.UIPlateau;
 import ui.event.*;
 
@@ -45,26 +51,25 @@ public class MonopolyGUI extends Application {
      * YL : ListView peut contenir n'importe quel type d'objet. Pour l'instant, ce sont des String
      * --> A modifier !!
      */
-    private ListView<String> proprietesJoueurCourant;
+    private ListView<Propriete> proprietesJoueurCourant;
 
     /**
      * YL : la liste des joueurs est représentée par une liste de noms, ainsi que la liste des pions.
      * --> A modifier !!
      */
-    // TODO: Mettre le type joueur
-    private final ArrayList<String> listeJoueurs = new ArrayList<String>();
-    private final ArrayList<String> listePions = new ArrayList<String>();
-    private String joueurCourant;
+    private final ArrayList<Joueur> listeJoueurs = new ArrayList<Joueur>();
+    private final ArrayList<Pion> listePions = new ArrayList<Pion>();
+    private Joueur joueurCourant;
 
     private int terrainSelectionne = -1;
     private TextField tfPorteMonnaie;
 
-    // TODO: Prendre en compte dans le lancer de dés
+    // TODO: Prendre en compte dans le lancer de dés dans EventJouer
     private int nbDoubles = 0;
 
     private final FenetreTerrain fenetreTerrain = new FenetreTerrain();
 
-    public ListView<String> getZoneProprietes() {
+    public ListView<Propriete> getZoneProprietes() {
         return proprietesJoueurCourant;
     }
 
@@ -72,7 +77,7 @@ public class MonopolyGUI extends Application {
         return tabBoutonsJoueurs;
     }
 
-    public ArrayList<String> getListeJoueurs() {
+    public ArrayList<Joueur> getListeJoueurs() {
         return listeJoueurs;
     }
 
@@ -163,12 +168,12 @@ public class MonopolyGUI extends Application {
         panneauDroit.getChildren().add(new Label("Liste des propriétés :"));
 
 
-        proprietesJoueurCourant = new ListView<String>();
+        proprietesJoueurCourant = new ListView<Propriete>();
         proprietesJoueurCourant.setPrefHeight(0);
 
-        proprietesJoueurCourant.getItems().addListener(new ListChangeListener<String>() {
+        proprietesJoueurCourant.getItems().addListener(new ListChangeListener<Propriete>() {
             @Override
-            public void onChanged(Change<? extends String> arg0) {
+            public void onChanged(Change<? extends Propriete> arg0) {
                 proprietesJoueurCourant.setPrefHeight(proprietesJoueurCourant.getItems().size() * 24 + 4); // 24 et 4 sont des nombres magiques...
             }
         });
@@ -232,9 +237,9 @@ public class MonopolyGUI extends Application {
         HBox box = new HBox();
         box.setMouseTransparent(true);
 
-        for (String joueur : listeJoueurs) {
+        for (Joueur joueur : listeJoueurs) {
 
-            ToggleButton bJoueur = new ToggleButton(joueur);
+            ToggleButton bJoueur = new ToggleButton(joueur.getNom());
             bJoueur.setToggleGroup(group);
             bJoueur.setOnAction(new EventChoixJoueur(this));
             bJoueur.setUserData(joueur);
@@ -252,34 +257,37 @@ public class MonopolyGUI extends Application {
     }
 
     private void initPartie() {
-        // TODO: Parser cartes et cases
+        Plateau plateau = Plateau.getPlateau();
+        plateau.initCartes();
+        plateau.initTerrains();
 
-        listeJoueurs.add("Han");
-        listePions.add("Bateau");
+        listeJoueurs.add(new Joueur("Quentin"));
+        listePions.add(new Pion("Bateau"));
 
-        listeJoueurs.add("Luke");
-        listePions.add("Chien");
+        listeJoueurs.add(new Joueur("Jules"));
+        listePions.add(new Pion("Chien"));
 
-        listeJoueurs.add("Yoda");
-        listePions.add("Voiture");
+        listeJoueurs.add(new Joueur("Yacine"));
+        listePions.add(new Pion("Voiture"));
 
-        uiPlateau = new UIPlateau(/* ? */);
+        uiPlateau = new UIPlateau();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-        // Tests
-        //        Scenario1.launch();
-        //        Scenario2.launch();
-        //        Scenario3.launch();
-        //        Scenario4.launch();
-        //        Scenario5.launch();
-        //        Scenario6.launch();
-        //        Scenario7.launch();
-        //        Scenario8.launch();
-        //        Scenario9.launch();
-        //        Scenario10.launch();
-        //        Scenario11.launch();
+    public static void main(String[] args) throws MonopolyException {
+        //launch(args);
+        //Tests
+        Scenario1.launch();
+        Scenario2.launch();
+        Scenario3.launch();
+        Scenario4.launch();
+        Scenario5.launch();
+        Scenario6.launch();
+        Scenario7.launch();
+        Scenario8.launch();
+        Scenario9.launch();
+        Scenario10.launch();
+        Scenario11.launch();
+
     }
 
     public void DialogAction(String message, boolean erreur) {
@@ -324,11 +332,11 @@ public class MonopolyGUI extends Application {
         return fenetreTerrain;
     }
 
-    public String getJoueurCourant() {
+    public Joueur getJoueurCourant() {
         return joueurCourant;
     }
 
-    public void setJoueurCourant(String j) {
+    public void setJoueurCourant(Joueur j) {
         joueurCourant = j;
 
     }

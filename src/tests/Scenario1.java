@@ -2,9 +2,6 @@ package tests;
 
 import cases.Case;
 import cases.Propriete;
-import io.parser.Parser;
-import io.parser.cases.*;
-import io.reader.Fichier;
 import plateau.Plateau;
 
 import java.util.ArrayList;
@@ -13,23 +10,10 @@ public class Scenario1 {
     public static void launch() {
         System.out.println("[DEBUT] Scénario 1 : Tests pour la construction du plateau");
         Plateau plateau = Plateau.getPlateau();
+        plateau.initTerrains();
+        plateau.initCartes();
+
         assert plateau.getNbJoueurs() == 0;
-
-        Parser first = null;
-        first = new ParserCaseAllerEnPrison(first);
-        first = new ParserCaseChance(first);
-        first = new ParserCaseCommunaute(first);
-        first = new ParserCaseCompagnie(first);
-        first = new ParserCaseDepart(first);
-        first = new ParserCaseGare(first);
-        first = new ParserCaseImpot(first);
-        first = new ParserCaseParkingGratuit(first);
-        first = new ParserCasePrison(first);
-        first = new ParserCaseSimpleVisite(first);
-        first = new ParserCaseTaxeLuxe(first);
-        first = new ParserCaseTerrain(first);
-
-        Fichier.lire("src/data/Terrains.csv", first);
 
         ArrayList<Case> cases = plateau.getCases();
         assert cases.get(0).getNom().equals("Case Départ");

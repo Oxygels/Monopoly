@@ -21,7 +21,7 @@ public class UIPlateau {
     private final HashMap<String, Image> imagesPions = new HashMap<String, Image>();
 
 
-    public UIPlateau(/* paramètres ? */) {
+    public UIPlateau() {
 
         for (int i = 0; i < 41; i++)
             cases.put(i, new UICase());

@@ -179,7 +179,6 @@ public class Joueur {
     }
 
     public void avancer(int montant) throws MonopolyException {
-
         if (montant < 0)
             throw new IllegalArgumentException("Montant deplacement négatif");
         Plateau plateau = Plateau.getPlateau();

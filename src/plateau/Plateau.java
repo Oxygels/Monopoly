@@ -6,6 +6,11 @@ import cases.Case;
 import cases.Propriete;
 import cases.TerrainConstructible;
 import exception.MonopolyException;
+import io.parser.Parser;
+import io.parser.cartes.chance.*;
+import io.parser.cartes.communaute.*;
+import io.parser.cases.*;
+import io.reader.Fichier;
 import joueur.Joueur;
 
 import java.util.ArrayList;
@@ -25,6 +30,45 @@ public class Plateau {
     private int indiceJoueurTour = -1;
 
     private Plateau() {
+
+    }
+
+    public void initCartes() {
+        Parser first = null;
+        first = new ParserCarteChanceDeplacement(first);
+        first = new ParserCarteChanceEncaisser(first);
+        first = new ParserCarteChanceDeplacementRelatif(first);
+        first = new ParserCarteChanceLiberation(first);
+        first = new ParserCarteChancePayer(first);
+        first = new ParserCarteChanceReparationImpot(first);
+
+        Fichier.lire("src/data/CartesChance.csv", first);
+        first = null;
+
+        first = new ParserCarteCommunauteAnniversaire(first);
+        first = new ParserCarteCommunauteChoix(first);
+        first = new ParserCarteCommunauteDeplacement(first);
+        first = new ParserCarteCommunauteEncaisser(first);
+        first = new ParserCarteCommunauteLiberation(first);
+        first = new ParserCarteCommunautePayer(first);
+        Fichier.lire("src/data/CartesCommunaute.csv", first);
+    }
+
+    public void initTerrains() {
+        Parser first = null;
+        first = new ParserCaseAllerEnPrison(first);
+        first = new ParserCaseChance(first);
+        first = new ParserCaseCommunaute(first);
+        first = new ParserCaseCompagnie(first);
+        first = new ParserCaseDepart(first);
+        first = new ParserCaseGare(first);
+        first = new ParserCaseImpot(first);
+        first = new ParserCaseParkingGratuit(first);
+        first = new ParserCasePrison(first);
+        first = new ParserCaseSimpleVisite(first);
+        first = new ParserCaseTaxeLuxe(first);
+        first = new ParserCaseTerrain(first);
+        Fichier.lire("src/data/Terrains.csv", first);
     }
 
     /**
