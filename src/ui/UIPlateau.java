@@ -1,5 +1,6 @@
 package ui;
 
+import application.MonopolyGUI;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 
@@ -21,11 +22,14 @@ public class UIPlateau {
     private final HashMap<String, Image> imagesPions = new HashMap<String, Image>();
 
 
-    public UIPlateau() {
+    private MonopolyGUI monopoly;
 
+
+    public UIPlateau(MonopolyGUI monopoly) {
         for (int i = 0; i < 41; i++)
             cases.put(i, new UICase());
 
+        setMonopoly(monopoly);
         initImagePlateau(PLATEAU);
         initCoordonnees(COORDONNEES);
         initImagesPions();
@@ -43,6 +47,13 @@ public class UIPlateau {
         imagesPions.put("Voiture", new Image("file:image/Voiture.png"));
     }
 
+    private MonopolyGUI getMonopoly() {
+        return monopoly;
+    }
+
+    private void setMonopoly(MonopolyGUI monopoly) {
+        this.monopoly = monopoly;
+    }
 
     public Image getImage() {
         return imagePlateau;
@@ -125,11 +136,13 @@ public class UIPlateau {
 
     public void dessiner(Canvas grillePane) {
         for (int i = 0; i <= NOMBRE_CASES; i++) {
-            cases.get(i).vider();
+            UICase uiCase = cases.get(i);
+            int finalI = i;
+            monopoly.getListePions().stream()
+                    .filter(j -> j.getPosition() == finalI)
+                    .forEach(uiCase::poser);
         }
 
-        // TODO: Repositionner les joueurs sur les cases grâce à leur position ou gestion par exception
-        // Nécessaire en cas de faillite
         grillePane.getGraphicsContext2D().drawImage(imagePlateau, 0, 0);
         for (int i = 0; i <= NOMBRE_CASES; i++) {
             UICase c = cases.get(i);

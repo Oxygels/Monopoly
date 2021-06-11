@@ -1,6 +1,5 @@
 package cases;
 
-import exception.ArgentException;
 import exception.MonopolyException;
 import joueur.Joueur;
 

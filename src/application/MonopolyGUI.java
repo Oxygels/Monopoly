@@ -19,7 +19,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import joueur.Joueur;
 import plateau.Plateau;
-import tests.*;
 import ui.FenetreTerrain;
 import ui.Pion;
 import ui.UIPlateau;
@@ -38,27 +37,24 @@ public class MonopolyGUI extends Application {
 
 
     private final ArrayList<ToggleButton> tabBoutonsJoueurs = new ArrayList<ToggleButton>();
-
-    private UIPlateau uiPlateau;
-    private Canvas grillePane;
-    private Button bAvancer;
-    private TextField tfDe1;
-    private TextField tfDe2;
-    private Label messageFooter;
-
-
-    /**
-     * YL : ListView peut contenir n'importe quel type d'objet. Pour l'instant, ce sont des String
-     * --> A modifier !!
-     */
-    private ListView<Propriete> proprietesJoueurCourant;
-
     /**
      * YL : la liste des joueurs est représentée par une liste de noms, ainsi que la liste des pions.
      * --> A modifier !!
      */
     private final ArrayList<Joueur> listeJoueurs = new ArrayList<Joueur>();
     private final ArrayList<Pion> listePions = new ArrayList<Pion>();
+    private final FenetreTerrain fenetreTerrain = new FenetreTerrain();
+    private UIPlateau uiPlateau;
+    private Canvas grillePane;
+    private Button bAvancer;
+    private TextField tfDe1;
+    private TextField tfDe2;
+    private Label messageFooter;
+    /**
+     * YL : ListView peut contenir n'importe quel type d'objet. Pour l'instant, ce sont des String
+     * --> A modifier !!
+     */
+    private ListView<Propriete> proprietesJoueurCourant;
     private Joueur joueurCourant;
 
     private int terrainSelectionne = -1;
@@ -67,7 +63,26 @@ public class MonopolyGUI extends Application {
     // TODO: Prendre en compte dans le lancer de dés dans EventJouer
     private int nbDoubles = 0;
 
-    private final FenetreTerrain fenetreTerrain = new FenetreTerrain();
+    public static void main(String[] args) throws MonopolyException {
+        launch(args);
+        //Tests
+//        Scenario1.launch();
+//        Scenario2.launch();
+//        Scenario3.launch();
+//        Scenario4.launch();
+//        Scenario5.launch();
+//        Scenario6.launch();
+//        Scenario7.launch();
+//        Scenario8.launch();
+//        Scenario9.launch();
+//        Scenario10.launch();
+//        Scenario11.launch();
+
+    }
+
+    public ArrayList<Pion> getListePions() {
+        return listePions;
+    }
 
     public ListView<Propriete> getZoneProprietes() {
         return proprietesJoueurCourant;
@@ -80,7 +95,6 @@ public class MonopolyGUI extends Application {
     public ArrayList<Joueur> getListeJoueurs() {
         return listeJoueurs;
     }
-
 
     public TextField getTfValeurDe1() {
         return tfDe1;
@@ -101,7 +115,6 @@ public class MonopolyGUI extends Application {
     public Canvas getGrillePane() {
         return grillePane;
     }
-
 
     @Override
     public void start(Stage primaryStage) {
@@ -151,7 +164,6 @@ public class MonopolyGUI extends Application {
 
         root.setBottom(footer);
     }
-
 
     private void initZonePropriete(VBox panneauDroit) {
         panneauDroit.getChildren().add(new Label(" "));
@@ -258,10 +270,13 @@ public class MonopolyGUI extends Application {
 
     private void initPartie() {
         Plateau plateau = Plateau.getPlateau();
-        plateau.initCartes();
         plateau.initTerrains();
+        plateau.initCartes();
+        Joueur quentin = new Joueur("Quentin");
+        Joueur jules = new Joueur("Jules");
+        Joueur yacine = new Joueur("Yacine");
 
-        listeJoueurs.add(new Joueur("Quentin"));
+        listeJoueurs.add(quentin);
         listePions.add(new Pion("Bateau"));
 
         listeJoueurs.add(new Joueur("Jules"));
@@ -270,24 +285,7 @@ public class MonopolyGUI extends Application {
         listeJoueurs.add(new Joueur("Yacine"));
         listePions.add(new Pion("Voiture"));
 
-        uiPlateau = new UIPlateau();
-    }
-
-    public static void main(String[] args) throws MonopolyException {
-        //launch(args);
-        //Tests
-        Scenario1.launch();
-        Scenario2.launch();
-        Scenario3.launch();
-        Scenario4.launch();
-        Scenario5.launch();
-        Scenario6.launch();
-        Scenario7.launch();
-        Scenario8.launch();
-        Scenario9.launch();
-        Scenario10.launch();
-        Scenario11.launch();
-
+        uiPlateau = new UIPlateau(this);
     }
 
     public void DialogAction(String message, boolean erreur) {
@@ -338,6 +336,5 @@ public class MonopolyGUI extends Application {
 
     public void setJoueurCourant(Joueur j) {
         joueurCourant = j;
-
     }
 }

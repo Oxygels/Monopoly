@@ -10,7 +10,6 @@ public class Pion {
     private String nom = "rien";
     private int position = 0;
 
-
     public Pion(String nom) {
         setNom(nom);
     }

@@ -1,6 +1,6 @@
 package cases;
 
-import exception.ArgentException;
+import exception.FailliteException;
 import joueur.Joueur;
 
 public abstract class Propriete extends Case {
@@ -61,12 +61,11 @@ public abstract class Propriete extends Case {
      * Methode publique redefinie par heritage, la classe Propriete heritant de la classe Case.
      *
      * @param joueur Un joueur designant le joueur auquel sera applique l'action.
-     *
-     * @throws ArgentException Exception relative a la somme d'argent que le joueur peut payer dans l'action.
+     * @throws FailliteException Exception relative a la somme d'argent que le joueur peut payer dans l'action.
      */
 
     @Override
-    public void action(Joueur joueur) throws ArgentException {
+    public void action(Joueur joueur) throws FailliteException {
         if (getProprietaire() == null)
             return;
         if (!getProprietaire().equals(joueur))

@@ -5,7 +5,7 @@ import cases.Case;
 import cases.CaseRecevoirConstant;
 import cases.Propriete;
 import cases.TerrainConstructible;
-import exception.ArgentException;
+import exception.FailliteException;
 import exception.MonopolyException;
 import plateau.Plateau;
 
@@ -81,7 +81,7 @@ public class Joueur {
         if (T == null)
             throw new IllegalArgumentException("Propriete ne peut etre null");
         if (montantBillet - T.getPrix() < 0)
-            throw new ArgentException("Pas assez d'argent pour acheter le terrain");
+            throw new FailliteException("Pas assez d'argent pour acheter le terrain");
         if (j == null && T.getProprietaire() != null)
             throw new MonopolyException("On ne peut pas acheter un terrain sans acheter au joueur concerné");
         if (j != null && !j.proprietesPossedees.contains(T))
@@ -97,18 +97,18 @@ public class Joueur {
         proprietesPossedees.add(T);
     }
 
-    public void payer(int montant, Joueur j) throws ArgentException {
+    public void payer(int montant, Joueur j) throws FailliteException {
         if (montantBillet - montant < 0)
-            throw new ArgentException("Le joueur n'a pas assez d'argent pour payer");
+            throw new FailliteException("Le joueur n'a pas assez d'argent pour payer");
         if (j == null)
             throw new IllegalArgumentException("Le joueur ne peut etre null");
         j.gagnerArgent(montant);
         montantBillet -= montant;
     }
 
-    public void payerBanque(int montant, boolean parcGratuit) throws ArgentException {
+    public void payerBanque(int montant, boolean parcGratuit) throws FailliteException {
         if (montantBillet - montant < 0)
-            throw new ArgentException("Le joueur n'a pas assez d'argent pour payer");
+            throw new FailliteException("Le joueur n'a pas assez d'argent pour payer");
         if (parcGratuit) {
             // Typiquement avec case "Taxe" ou certaines cartes
             Plateau plateau = Plateau.getPlateau();
@@ -151,7 +151,7 @@ public class Joueur {
         } else {
             try {
                 j.payer(prix, this);
-            } catch (ArgentException e) {
+            } catch (FailliteException e) {
                 e.printStackTrace();
             }
             j.recevoirCarteLibPrison(cartesLibPrison.pop());
@@ -178,7 +178,7 @@ public class Joueur {
         getPositionCase().action(this);
     }
 
-    public void avancer(int montant) throws MonopolyException {
+    public Case avancer(int montant) throws MonopolyException {
         if (montant < 0)
             throw new IllegalArgumentException("Montant deplacement négatif");
         Plateau plateau = Plateau.getPlateau();
@@ -188,6 +188,7 @@ public class Joueur {
 
         position = (position + montant) % (plateau.getNbCases() - 1);
         getPositionCase().action(this);
+        return getPositionCase();
     }
 
     public void acheterMaison(TerrainConstructible T) throws MonopolyException {

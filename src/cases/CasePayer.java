@@ -1,6 +1,6 @@
 package cases;
 
-import exception.ArgentException;
+import exception.FailliteException;
 import joueur.Joueur;
 
 public abstract class CasePayer extends CasePayerRecevoir {
@@ -10,7 +10,7 @@ public abstract class CasePayer extends CasePayerRecevoir {
     }
 
     @Override
-    public void action(Joueur joueur) throws ArgentException {
+    public void action(Joueur joueur) throws FailliteException {
         joueur.payerBanque(getMontant(), true);
     }
 

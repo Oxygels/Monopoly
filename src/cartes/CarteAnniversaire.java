@@ -1,6 +1,6 @@
 package cartes;
 
-import exception.ArgentException;
+import exception.FailliteException;
 import joueur.Joueur;
 import plateau.Plateau;
 
@@ -37,11 +37,11 @@ public class CarteAnniversaire extends Carte {
     }
 
     @Override
-    public void actionCarte(Joueur J) throws ArgentException {
+    public void actionCarte(Joueur J) throws FailliteException {
         ArrayList<Joueur> players = Plateau.getPlateau().getJoueurs();
 
-        for(Joueur j : players){
-            if(!j.equals(J))
+        for (Joueur j : players) {
+            if (!j.equals(J))
                 j.payer(montantParJoueur, J);
         }
     }

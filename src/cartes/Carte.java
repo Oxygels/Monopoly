@@ -5,7 +5,6 @@
 
 package cartes;
 
-import exception.ArgentException;
 import exception.MonopolyException;
 import joueur.Joueur;
 
