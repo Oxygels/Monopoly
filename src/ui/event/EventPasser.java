@@ -18,7 +18,7 @@ public class EventPasser implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent e) {
-        // TODO: Décrit ce qui se  passe après le changement de joeur
+        // Décrit ce qui se  passe après le changement de joueur
         ArrayList<Joueur> lesJoueurs = monopoly.getListeJoueurs();
         Joueur jc = monopoly.getJoueurCourant();
         int i = lesJoueurs.indexOf(jc);
@@ -27,5 +27,4 @@ public class EventPasser implements EventHandler<ActionEvent> {
         ToggleButton button = monopoly.getTabBoutonsJoueurs().get(suivant);
         button.fire();
     }
-
 }

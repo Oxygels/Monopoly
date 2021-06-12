@@ -337,4 +337,23 @@ public class MonopolyGUI extends Application {
     public void setJoueurCourant(Joueur j) {
         joueurCourant = j;
     }
+
+    public void avancer(int nbCases) throws MonopolyException {
+        getJoueurCourant().avancer(nbCases);
+        int positionCourante = getJoueurCourant().getPosition();
+        Pion pionCourant = getListePions().get(getListeJoueurs().indexOf(getJoueurCourant()));
+        pionCourant.setPosition(positionCourante);
+    }
+
+    public void retirerJoueur(Joueur j) {
+        int indexOfJ = getListeJoueurs().indexOf(j);
+        getListeJoueurs().remove(indexOfJ);
+        getListePions().remove(indexOfJ);
+    }
+
+    public void seDeplacer(int destination) throws MonopolyException {
+        getJoueurCourant().seDeplacer(destination);
+        Pion pionCourant = getListePions().get(getListeJoueurs().indexOf(getJoueurCourant()));
+        pionCourant.setPosition(destination);
+    }
 }

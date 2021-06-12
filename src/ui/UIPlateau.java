@@ -137,6 +137,7 @@ public class UIPlateau {
     public void dessiner(Canvas grillePane) {
         for (int i = 0; i <= NOMBRE_CASES; i++) {
             UICase uiCase = cases.get(i);
+            uiCase.vider();
             int finalI = i;
             monopoly.getListePions().stream()
                     .filter(j -> j.getPosition() == finalI)
