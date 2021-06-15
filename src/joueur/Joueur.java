@@ -76,22 +76,15 @@ public class Joueur {
 
     //--------------------METHODES METIERS-----------------------------//
 
-    public void acheterPropriete(Propriete T, Joueur j) throws MonopolyException {
-
+    public void acheterPropriete(Propriete T) throws MonopolyException {
         if (T == null)
             throw new IllegalArgumentException("Propriete ne peut etre null");
+        if (T.getProprietaire() != null)
+            throw new MonopolyException("Le terrain a déjà été acheté par " + T.getProprietaire().getNom());
         if (montantBillet - T.getPrix() < 0)
-            throw new FailliteException("Pas assez d'argent pour acheter le terrain");
-        if (j == null && T.getProprietaire() != null)
-            throw new MonopolyException("On ne peut pas acheter un terrain sans acheter au joueur concerné");
-        if (j != null && !j.proprietesPossedees.contains(T))
-            throw new MonopolyException("Le joueur ne possede pas la propriete");
+            throw new MonopolyException("Pas assez d'argent pour acheter le terrain");
 
-        if (j != null) {
-            payer(T.getPrix(), j);
-            j.proprietesPossedees.remove(T);
-        } else
-            payerBanque(T.getPrix(), false);
+        payerBanque(T.getPrix(), false);
 
         T.setProprietaire(this);
         proprietesPossedees.add(T);
@@ -130,6 +123,7 @@ public class Joueur {
             throw new MonopolyException("Pas de carte \"Libéré de prison\" possédée");
         else {
             CarteLibereDePrison carte = cartesLibPrison.pop();
+            carte.actionCarte(this);
             switch (carte.getCategorieCarte()) {
                 // On place la carte en dessous de la pile
                 case Chance:
@@ -139,22 +133,6 @@ public class Joueur {
                     Plateau.getPlateau().getCartesCommunaute().add(0, carte);
                     break;
             }
-        }
-    }
-
-    public void vendreCarteLibPrison(int prix, Joueur j) throws MonopolyException {
-        if (cartesLibPrison.size() == 0)
-            throw new MonopolyException("nombre de cartes prison est deja a 0");
-        if (j == null) {
-            utiliserCarteLibPrison();
-            montantBillet += prix;
-        } else {
-            try {
-                j.payer(prix, this);
-            } catch (FailliteException e) {
-                e.printStackTrace();
-            }
-            j.recevoirCarteLibPrison(cartesLibPrison.pop());
         }
     }
 
@@ -187,8 +165,9 @@ public class Joueur {
             ((CaseRecevoirConstant) plateau.getCase("Case Départ")).action(this);
 
         position = (position + montant) % (plateau.getNbCases() - 1);
+        Case casePreAction = getPositionCase();
         getPositionCase().action(this);
-        return getPositionCase();
+        return casePreAction;
     }
 
     public void acheterMaison(TerrainConstructible T) throws MonopolyException {

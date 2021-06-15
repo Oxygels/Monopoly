@@ -1,16 +1,26 @@
-package tests;
-
 import cases.TerrainConstructible;
 import exception.MonopolyException;
 import joueur.Joueur;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import plateau.Plateau;
 
-public class Scenario9 {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-    public static void launch() throws MonopolyException {
+public class Scenario9 {
+    @BeforeAll
+    public static void resetInstance() {
+        Plateau plateau = Plateau.getPlateau();
+        plateau.clear();
+        plateau.initTerrains();
+        plateau.initCartes();
+    }
+
+    @Test
+    public void launchScenario9() throws MonopolyException {
         System.out.println("[DEBUT] Scénario 9 : Tests pour l’achat d’un hôtel");
         Plateau plateau = Plateau.getPlateau();
-        plateau.init();
 
         Joueur quentin = new Joueur("Quentin");
         Joueur jules = new Joueur("Jules");
@@ -21,9 +31,9 @@ public class Scenario9 {
         TerrainConstructible vaugirard = (TerrainConstructible) plateau.getCase("Rue de Vaugirard");
         TerrainConstructible courcelles = (TerrainConstructible) plateau.getCase("Rue de Courcelles");
         TerrainConstructible republique = (TerrainConstructible) plateau.getCase("Avenue de la République");
-        quentin.acheterPropriete(vaugirard, null);
-        quentin.acheterPropriete(courcelles, null);
-        quentin.acheterPropriete(republique, null);
+        quentin.acheterPropriete(vaugirard);
+        quentin.acheterPropriete(courcelles);
+        quentin.acheterPropriete(republique);
         for (int i = 0; i < 3; i++) {
             quentin.acheterMaison(vaugirard);
             quentin.acheterMaison(courcelles);
@@ -37,14 +47,14 @@ public class Scenario9 {
         } catch (MonopolyException exception1) {
             exception = true;
         }
-        assert exception;
+        assertTrue(exception);
 
         quentin.acheterMaison(vaugirard);
         quentin.acheterMaison(republique);
-        assert quentin.getMontantBillet() == 530;
+        assertEquals(530, quentin.getMontantBillet());
         jules.seDeplacer(plateau.getCase("Avenue de la République").getId());
-        assert jules.getMontantBillet() == 900;
-        assert quentin.getMontantBillet() == 1130;
+        assertEquals(900, jules.getMontantBillet());
+        assertEquals(1130, quentin.getMontantBillet());
 
         System.out.println("[REUSSITE] Scénario 9 : Tests pour l’achat d’un hôtel\n");
     }

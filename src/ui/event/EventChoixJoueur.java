@@ -26,7 +26,9 @@ public class EventChoixJoueur implements EventHandler<ActionEvent> {
             monopoly.setJoueurCourant(j);
             monopoly.DialogInfo(monopoly.getJoueurCourant().getNom() + " doit jouer");
             monopoly.getZoneProprietes().getItems().clear();
-
+            // Maj du porte monnaie
+            monopoly.getTfPorteMonnaie().setText(String.valueOf(j.getMontantBillet()));
+            // Maj des propriétés
         }
     }
 }

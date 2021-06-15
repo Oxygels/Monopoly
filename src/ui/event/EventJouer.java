@@ -2,7 +2,6 @@ package ui.event;
 
 import application.MonopolyGUI;
 import cases.Case;
-import cases.CasePioche;
 import cases.CasePiocheChance;
 import cases.CasePiocheCommunaute;
 import exception.FailliteException;
@@ -31,18 +30,27 @@ public class EventJouer implements EventHandler<ActionEvent> {
 
         int nbCases = de1 + de2;
 
-        // System.out.println("d1=" + de1 + "  d2=" + de2 + "  nb cases=" + nbCases);
-
+        int nbcarteslib = monopoly.getJoueurCourant().getNbCartesLibPrison();
         try {
-            monopoly.avancer(nbCases);
+            Case destination = monopoly.avancer(nbCases);
+            // Pour montrer au joueur qu'il a avancé sur une case pioche avant de voir le dialogue
+            monopoly.getUiPlateau().dessiner(monopoly.getGrillePane());
 
-            if (monopoly.getJoueurCourant().getPositionCase() instanceof CasePiocheChance) {
-                String enonce = Plateau.getPlateau().getCartesChance().get(0).getEnonce();
-                monopoly.DialogInfo(enonce);
-            }
-            else if (monopoly.getJoueurCourant().getPositionCase() instanceof CasePiocheCommunaute) {
-                String enonce = Plateau.getPlateau().getCartesCommunaute().get(0).getEnonce();
-                monopoly.DialogInfo(enonce);
+            String enonce;
+
+            if (destination instanceof CasePiocheChance) {
+                if (monopoly.getJoueurCourant().getNbCartesLibPrison() > nbcarteslib) {
+                    enonce = "Vous êtes libéré de Prison";
+                } else
+                    enonce = Plateau.getPlateau().getCartesChance().get(0).getEnonce();
+
+                monopoly.DialogInfo("Vous avez pioché la carte \"Chance\" suivante:\n\n" + enonce);
+            } else if (destination instanceof CasePiocheCommunaute) {
+                if (monopoly.getJoueurCourant().getNbCartesLibPrison() > nbcarteslib) {
+                    enonce = "Vous êtes libéré de Prison";
+                } else
+                    enonce = Plateau.getPlateau().getCartesChance().get(0).getEnonce();
+                monopoly.DialogInfo("Vous avez pioché la carte \"Caisse de Communauté\" suivante :\n\n" + enonce);
             }
         } catch (FailliteException e) {
             monopoly.retirerJoueur(monopoly.getJoueurCourant());
@@ -75,7 +83,8 @@ public class EventJouer implements EventHandler<ActionEvent> {
         } else {
             monopoly.setNbDoubles(0);
         }
-
+        monopoly.getTfPorteMonnaie().setText(String.valueOf(monopoly.getJoueurCourant().getMontantBillet()));
+        Case cases = monopoly.getJoueurCourant().getPositionCase();
         monopoly.getUiPlateau().dessiner(monopoly.getGrillePane());
     }
 }

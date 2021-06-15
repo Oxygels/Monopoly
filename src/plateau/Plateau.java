@@ -1,10 +1,9 @@
 package plateau;
 
 import cartes.Carte;
+import cartes.CarteLibereDePrison;
 import cartes.CategorieCarte;
 import cases.Case;
-import cases.Propriete;
-import cases.TerrainConstructible;
 import exception.MonopolyException;
 import io.parser.Parser;
 import io.parser.cartes.chance.*;
@@ -88,19 +87,14 @@ public class Plateau {
      * Methode publique permettant l'initialisation d'un plateau.
      */
 
-    public void init() {
+    public void clear() {
         valeurParcGratuit = 0;
         dernierLancerDes = 0;
         indiceJoueurTour = -1;
         joueurs.clear();
-        cases.forEach(c -> {
-            if (c instanceof Propriete) {
-                ((Propriete) (c)).setProprietaire(null);
-                if (c instanceof TerrainConstructible) {
-                    ((TerrainConstructible) c).init();
-                }
-            }
-        });
+        cartesCommunaute.clear();
+        cartesChance.clear();
+        cases.clear();
     }
 
     public int getValeurParcGratuit() {
@@ -192,7 +186,6 @@ public class Plateau {
      * Methode publique permettant d'ajouter un joueur.
      *
      * @param joueur designant le joueur a ajouter.
-     *
      * @see Joueur
      */
 
@@ -203,13 +196,14 @@ public class Plateau {
             throw new IllegalArgumentException("Le joueur existe deja dans la partie.");
         else
             joueurs.add(joueur);
+        if (getIndiceJoueurTour() == -1)
+            setIndiceJoueurTour(0);
     }
 
     /**
      * Methode publique permettant de retirer un joueur.
      *
      * @param joueur designant le joueur a retirer.
-     *
      * @see Joueur
      */
 
@@ -226,7 +220,6 @@ public class Plateau {
      * Methode publique permettant d'ajouter une case.
      *
      * @param caseTerrain designant la case a ajouter.
-     *
      * @see Case
      */
 
@@ -241,7 +234,6 @@ public class Plateau {
      * Methode publique permettant de retirer une case.
      *
      * @param caseTerrain designant la case a retirer.
-     *
      * @see Case
      */
 
@@ -258,7 +250,6 @@ public class Plateau {
      * Methode publique permettant d'ajouter une carte Chance.
      *
      * @param carte designant la carte Chance a ajouter.
-     *
      * @see Carte
      * @see CategorieCarte
      */
@@ -271,7 +262,6 @@ public class Plateau {
      * Methode publique permettant d'ajouter une carte Communaute.
      *
      * @param carte designant la carte Communaute a ajouter.
-     *
      * @see Carte
      * @see CategorieCarte
      */
@@ -296,9 +286,17 @@ public class Plateau {
         Carte carte;
         if (categorie == CategorieCarte.Chance) {
             carte = cartesChance.pop();
+            if (carte instanceof CarteLibereDePrison) {
+                getJoueurCourant().recevoirCarteLibPrison((CarteLibereDePrison) carte);
+                return;
+            }
             cartesChance.add(0, carte);
         } else {
             carte = cartesCommunaute.pop();
+            if (carte instanceof CarteLibereDePrison) {
+                getJoueurCourant().recevoirCarteLibPrison((CarteLibereDePrison) carte);
+                return;
+            }
             cartesCommunaute.add(0, carte);
         }
         carte.actionCarte(j);
@@ -307,9 +305,8 @@ public class Plateau {
     /**
      * Methode publique permettant d'ajouter une carte Chance.
      *
-     * @param carte designant la carte a retirer.
+     * @param carte     designant la carte a retirer.
      * @param categorie designant la categorie de la carte a retirer.
-     *
      * @see Carte
      * @see CategorieCarte
      */

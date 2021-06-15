@@ -1,10 +1,12 @@
 package application;
 
 
+import cases.Case;
 import cases.Propriete;
 import exception.MonopolyException;
 import javafx.application.Application;
 import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -65,19 +67,6 @@ public class MonopolyGUI extends Application {
 
     public static void main(String[] args) throws MonopolyException {
         launch(args);
-        //Tests
-//        Scenario1.launch();
-//        Scenario2.launch();
-//        Scenario3.launch();
-//        Scenario4.launch();
-//        Scenario5.launch();
-//        Scenario6.launch();
-//        Scenario7.launch();
-//        Scenario8.launch();
-//        Scenario9.launch();
-//        Scenario10.launch();
-//        Scenario11.launch();
-
     }
 
     public ArrayList<Pion> getListePions() {
@@ -194,7 +183,6 @@ public class MonopolyGUI extends Application {
             @Override
             public void handle(MouseEvent arg0) {
                 terrainSelectionne = proprietesJoueurCourant.getSelectionModel().getSelectedIndex();
-                System.out.println("Item : " + proprietesJoueurCourant.getSelectionModel().getSelectedIndex());
             }
         });
 
@@ -224,7 +212,18 @@ public class MonopolyGUI extends Application {
         box.getChildren().add(payerPrison);
 
         Button liberation = new Button(ACTION_LIBERATION);
+        liberation.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    getJoueurCourant().utiliserCarteLibPrison();
+                } catch (MonopolyException e) {
+                    DialogAction(e.getMessage(), true);
+                }
+            }
+        });
         box.getChildren().add(liberation);
+
 
         panneauDroit.getChildren().add(box);
     }
@@ -272,20 +271,19 @@ public class MonopolyGUI extends Application {
         Plateau plateau = Plateau.getPlateau();
         plateau.initTerrains();
         plateau.initCartes();
-        Joueur quentin = new Joueur("Quentin");
-        Joueur jules = new Joueur("Jules");
-        Joueur yacine = new Joueur("Yacine");
 
-        listeJoueurs.add(quentin);
-        listePions.add(new Pion("Bateau"));
-
-        listeJoueurs.add(new Joueur("Jules"));
-        listePions.add(new Pion("Chien"));
-
-        listeJoueurs.add(new Joueur("Yacine"));
-        listePions.add(new Pion("Voiture"));
+        ajouterJoueur("Quentin", "Bateau");
+        ajouterJoueur("Jules", "Chien");
+        ajouterJoueur("Yacine", "Voiture");
 
         uiPlateau = new UIPlateau(this);
+    }
+
+    private void ajouterJoueur(String nomJoueur, String nomPion) {
+        Joueur j = new Joueur(nomJoueur);
+        listeJoueurs.add(j);
+        Plateau.getPlateau().ajouterJoueur(j);
+        listePions.add(new Pion(nomPion));
     }
 
     public void DialogAction(String message, boolean erreur) {
@@ -335,14 +333,20 @@ public class MonopolyGUI extends Application {
     }
 
     public void setJoueurCourant(Joueur j) {
+        getZoneProprietes().getItems().clear();
         joueurCourant = j;
+        for (Propriete p : j.getProprietesPossedees()) {
+            getZoneProprietes().getItems().add(p);
+        }
+
     }
 
-    public void avancer(int nbCases) throws MonopolyException {
-        getJoueurCourant().avancer(nbCases);
+    public Case avancer(int nbCases) throws MonopolyException {
+        Case destination = getJoueurCourant().avancer(nbCases);
         int positionCourante = getJoueurCourant().getPosition();
         Pion pionCourant = getListePions().get(getListeJoueurs().indexOf(getJoueurCourant()));
         pionCourant.setPosition(positionCourante);
+        return destination;
     }
 
     public void retirerJoueur(Joueur j) {

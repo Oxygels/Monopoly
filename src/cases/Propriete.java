@@ -72,6 +72,11 @@ public abstract class Propriete extends Case {
             joueur.payer(calculerLoyer(), getProprietaire());
     }
 
+    @Override
+    public String toString() {
+        return getNom();
+    }
+
     /**
      * Methode publique abstraite visant a calculer le loyer d'une propriete.
      *
