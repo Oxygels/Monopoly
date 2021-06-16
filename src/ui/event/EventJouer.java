@@ -30,6 +30,31 @@ public class EventJouer implements EventHandler<ActionEvent> {
             int de2 = Integer.parseInt(tfDe2);
 
             int nbCases = de1 + de2;
+            if (de1 == de2) {
+                int nbDbl = monopoly.getNbDoubles();
+
+                nbDbl++;
+                monopoly.setNbDoubles(nbDbl);
+
+                if (nbDbl == 1)
+                    monopoly.getMessageFooter().setText("C'est ton premier double !");
+                else if (nbDbl == 2)
+                    monopoly.getMessageFooter().setText("C'est ton deuxième double !! Encore un et c'est la taule...");
+                else {
+                    monopoly.getMessageFooter().setText("Police, menottes, prison...");
+
+                    try {
+                        int prison = Plateau.getPlateau().getCase("Prison").getId();
+                        monopoly.seDeplacer(prison);
+                    } catch (MonopolyException e) {
+
+                    }
+
+                    monopoly.setNbDoubles(0);
+                }
+            } else {
+                monopoly.setNbDoubles(0);
+            }
 
             int nbcarteslib = monopoly.getJoueurCourant().getNbCartesLibPrison();
             try {
@@ -66,31 +91,7 @@ public class EventJouer implements EventHandler<ActionEvent> {
                 monopoly.updateUi();
             }
 
-            if (de1 == de2) {
-                int nbDbl = monopoly.getNbDoubles();
 
-                nbDbl++;
-                monopoly.setNbDoubles(nbDbl);
-
-                if (nbDbl == 1)
-                    monopoly.getMessageFooter().setText("C'est ton premier double !");
-                else if (nbDbl == 2)
-                    monopoly.getMessageFooter().setText("C'est ton deuxième double !! Encore un et c'est la taule...");
-                else {
-                    monopoly.getMessageFooter().setText("Police, menottes, prison...");
-
-                    try {
-                        int prison = Plateau.getPlateau().getCase("Prison").getId();
-                        monopoly.seDeplacer(prison);
-                    } catch (MonopolyException e) {
-
-                    }
-
-                    monopoly.setNbDoubles(0);
-                }
-            } else {
-                monopoly.setNbDoubles(0);
-            }
             // Voir le pion aller en prison si il a fait 3x un double
             monopoly.updateUi();
         } catch (NumberFormatException e) {

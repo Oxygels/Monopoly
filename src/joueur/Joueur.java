@@ -143,6 +143,18 @@ public class Joueur {
         }
     }
 
+    public void finirTour() throws MonopolyException {
+        try {
+            Plateau plateau = Plateau.getPlateau();
+            Joueur jcourant = plateau.getJoueurCourant();
+            if (jcourant != this)
+                throw new MonopolyException("Un joueur ne peut finir son tour si ce n'est pas a lui de jouer");
+            plateau.setIndiceJoueurTour((plateau.getIndiceJoueurTour() + 1) % plateau.getNbJoueurs());
+        } catch (IndexOutOfBoundsException e) {
+            System.err.println("Il n'y a pas de joueur sur le plateau");
+        }
+    }
+
     public void seDeplacer(int destination) throws MonopolyException {
         if (destination < 0)
             throw new IllegalArgumentException("La destination doit etre un nombre positif");

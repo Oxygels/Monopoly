@@ -279,7 +279,6 @@ public class Plateau {
      * @see Carte
      * @see CategorieCarte
      */
-
     public void piocherCarte(CategorieCarte categorie, Joueur j) throws MonopolyException {
         if (j == null)
             throw new IllegalArgumentException("Joueur null");
