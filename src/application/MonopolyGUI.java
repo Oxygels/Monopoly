@@ -54,7 +54,6 @@ public class MonopolyGUI extends Application {
     private Propriete terrainSelectionne = null;
     private TextField tfPorteMonnaie;
 
-    // TODO: Prendre en compte dans le lancer de dés dans EventJouer
     private int nbDoubles = 0;
 
     public static void main(String[] args) throws MonopolyException {
@@ -212,6 +211,7 @@ public class MonopolyGUI extends Application {
             public void handle(ActionEvent event) {
                 try {
                     getJoueurCourant().payerPrison();
+                    updateUi();
                 } catch (FailliteException e) {
                     retirerJoueur(getJoueurCourant());
                 } catch (MonopolyException e) {
@@ -227,6 +227,7 @@ public class MonopolyGUI extends Application {
             public void handle(ActionEvent event) {
                 try {
                     getJoueurCourant().utiliserCarteLibPrison();
+                    updateUi();
                 } catch (MonopolyException e) {
                     DialogAction(e.getMessage(), true);
                 }

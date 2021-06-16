@@ -251,6 +251,9 @@ public class Joueur {
     public Case avancer(int montant) throws MonopolyException {
         if (montant < 0)
             throw new IllegalArgumentException("Montant deplacement négatif");
+        if (getPositionCase().getNom().equals("Prison")) {
+            throw new MonopolyException("Tu es bloqué en prison, il faut payer ou se libérer");
+        }
         Plateau plateau = Plateau.getPlateau();
         plateau.setDernierLancerDes(montant);
         if (position + montant >= plateau.getNbCases())

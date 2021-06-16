@@ -10,7 +10,7 @@ public class CasePrison extends Case {
 
     @Override
     public void action(Joueur joueur) {
-        //TODO: Autoriser le joueur à payer pour en sortir
+
     }
 
 }

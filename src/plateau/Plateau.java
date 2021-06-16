@@ -164,7 +164,7 @@ public class Plateau {
     }
 
     /**
-     * Methode permettant de simuler le lancer des deux des.
+     * Methode publique permettant de simuler le lancer des deux des.
      */
 
     private void lancerDes() {
@@ -183,7 +183,7 @@ public class Plateau {
     }
 
     /**
-     * Methode permettant d'ajouter un joueur.
+     * Methode publique permettant d'ajouter un joueur.
      *
      * @param joueur designant le joueur a ajouter.
      * @see Joueur
@@ -201,7 +201,7 @@ public class Plateau {
     }
 
     /**
-     * Methode permettant de retirer un joueur.
+     * Methode publique permettant de retirer un joueur.
      *
      * @param joueur designant le joueur a retirer.
      * @see Joueur
@@ -217,7 +217,7 @@ public class Plateau {
     }
 
     /**
-     * Methode permettant d'ajouter une case.
+     * Methode publique permettant d'ajouter une case.
      *
      * @param caseTerrain designant la case a ajouter.
      * @see Case
@@ -231,7 +231,7 @@ public class Plateau {
     }
 
     /**
-     * Methode permettant de retirer une case.
+     * Methode publique permettant de retirer une case.
      *
      * @param caseTerrain designant la case a retirer.
      * @see Case
@@ -247,7 +247,7 @@ public class Plateau {
     }
 
     /**
-     * Methode permettant d'ajouter une carte Chance.
+     * Methode publique permettant d'ajouter une carte Chance.
      *
      * @param carte designant la carte Chance a ajouter.
      * @see Carte
@@ -259,7 +259,7 @@ public class Plateau {
     }
 
     /**
-     * Methode permettant d'ajouter une carte Communaute.
+     * Methode publique permettant d'ajouter une carte Communaute.
      *
      * @param carte designant la carte Communaute a ajouter.
      * @see Carte
@@ -273,13 +273,12 @@ public class Plateau {
     // PATTERN SINGLETON
 
     /**
-     * Methode permettant de piocher une carte.
+     * Methode publique permettant de piocher une carte.
      *
      * @param categorie designant la categorie de la carte a piocher.
      * @see Carte
      * @see CategorieCarte
      */
-
     public void piocherCarte(CategorieCarte categorie, Joueur j) throws MonopolyException {
         if (j == null)
             throw new IllegalArgumentException("Joueur null");
@@ -303,7 +302,7 @@ public class Plateau {
     }
 
     /**
-     * Methode permettant d'ajouter une carte Chance.
+     * Retirer une carte.
      *
      * @param carte     designant la carte a retirer.
      * @param categorie designant la categorie de la carte a retirer.

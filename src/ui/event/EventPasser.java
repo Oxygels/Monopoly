@@ -27,6 +27,11 @@ public class EventPasser implements EventHandler<ActionEvent> {
         int suivant = (i + 1) % lesJoueurs.size();
 
         ToggleButton button = monopoly.getTabBoutonsJoueurs().get(suivant);
+        try {
+            monopoly.getJoueurCourant().finirTour();
+        } catch (Exception monopolyException) {
+            monopoly.DialogInfo(monopolyException.getMessage());
+        }
         button.fire();
     }
 }

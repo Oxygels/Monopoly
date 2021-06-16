@@ -31,6 +31,7 @@ public class DialogueTerrain {
         _bAcheterHotel = new Button();
         _bVendreHotel = new Button();
         this.monopoly = monopoly;
+        root.setSpacing(5);
         _bAcheterMaison.setText("Acheter une maison");
         _bVendreMaison.setText("Vendre une maison");
         _bAcheterHotel.setText("Acheter hôtel");

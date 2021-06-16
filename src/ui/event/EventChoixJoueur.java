@@ -29,8 +29,10 @@ public class EventChoixJoueur implements EventHandler<ActionEvent> {
             for (Propriete p : j.getProprietesPossedees()) {
                 monopoly.getZoneProprietes().getItems().add(p);
             }
+            monopoly.setNbDoubles(0);
             monopoly.DialogInfo(monopoly.getJoueurCourant().getNom() + " doit jouer");
             monopoly.updateUi();
+
         }
     }
 }
