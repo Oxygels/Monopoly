@@ -50,7 +50,7 @@ public class EventJouer implements EventHandler<ActionEvent> {
                     if (monopoly.getJoueurCourant().getNbCartesLibPrison() > nbcarteslib) {
                         enonce = "Vous êtes libéré de Prison";
                     } else
-                        enonce = Plateau.getPlateau().getCartesChance().get(0).getEnonce();
+                        enonce = Plateau.getPlateau().getCartesCommunaute().get(0).getEnonce();
                     monopoly.DialogInfo("Vous avez pioché la carte \"Caisse de Communauté\" suivante :\n\n" + enonce);
                 }
             } catch (FailliteException e) {
@@ -83,7 +83,7 @@ public class EventJouer implements EventHandler<ActionEvent> {
                         int prison = Plateau.getPlateau().getCase("Prison").getId();
                         monopoly.seDeplacer(prison);
                     } catch (MonopolyException e) {
-                        e.printStackTrace();
+
                     }
 
                     monopoly.setNbDoubles(0);

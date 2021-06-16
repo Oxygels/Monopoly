@@ -143,18 +143,6 @@ public class Joueur {
         }
     }
 
-    public void finirTour() throws MonopolyException {
-        try {
-            Plateau plateau = Plateau.getPlateau();
-            Joueur jcourant = plateau.getJoueurCourant();
-            if (jcourant != this)
-                throw new MonopolyException("Un joueur ne peut finir son tour si ce n'est pas a lui de jouer");
-            plateau.setIndiceJoueurTour((plateau.getIndiceJoueurTour() + 1) % plateau.getNbJoueurs());
-        } catch (IndexOutOfBoundsException e) {
-            System.err.println("Il n'y a pas de joueur sur le plateau");
-        }
-    }
-
     public void seDeplacer(int destination) throws MonopolyException {
         if (destination < 0)
             throw new IllegalArgumentException("La destination doit etre un nombre positif");
@@ -166,6 +154,9 @@ public class Joueur {
     public Case avancer(int montant) throws MonopolyException {
         if (montant < 0)
             throw new IllegalArgumentException("Montant deplacement négatif");
+        if (getPositionCase().getNom().equals("Prison")) {
+            throw new MonopolyException("Tu es bloqué en prison, il faut payer ou se libérer");
+        }
         Plateau plateau = Plateau.getPlateau();
         plateau.setDernierLancerDes(montant);
         if (position + montant >= plateau.getNbCases())

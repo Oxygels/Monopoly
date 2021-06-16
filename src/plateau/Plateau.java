@@ -303,7 +303,7 @@ public class Plateau {
     }
 
     /**
-     * Methode publique permettant d'ajouter une carte Chance.
+     * Retirer une carte.
      *
      * @param carte     designant la carte a retirer.
      * @param categorie designant la categorie de la carte a retirer.

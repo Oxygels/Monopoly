@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class CarteLibereDePrison extends Carte {
 
     // Important car le joueur devra à un moment la remettre dans la bonne pile
-    private CategorieCarte categorieCarte;
+    private final CategorieCarte categorieCarte;
 
     /**
      * Cette classe represente la carte Liberer de prison.
@@ -22,6 +22,7 @@ public class CarteLibereDePrison extends Carte {
      */
     public CarteLibereDePrison(String enonce, CategorieCarte categorie) {
         super(enonce);
+        this.categorieCarte = categorie;
     }
 
     public CategorieCarte getCategorieCarte() {
@@ -35,6 +36,6 @@ public class CarteLibereDePrison extends Carte {
         if (!cases.get(J.getPosition()).getNom().equals("Prison"))
             throw new MonopolyException("Le joueur n'est pas en prison , il ne peut pas utiliser cette carte");
 
-        J.seDeplacer(Plateau.getPlateau().getCase("Simple Visite").getId());
+        J.seDeplacer(Plateau.getPlateau().getCase("Simple visite").getId());
     }
 }
