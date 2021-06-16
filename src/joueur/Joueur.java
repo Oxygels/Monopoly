@@ -407,7 +407,7 @@ public class Joueur {
     }
 
     /**
-     * Methode permettant de verifier si le joueur possede toutes les couleurs ou non
+     * Methode permettant de verifier si le joueur possede toutes les couleurs ou non.
      *
      * @param T Le terrain d'une couleur en particulier.
      * @return Un booleen designant si toutes les couleurs sont possedees (true) ou non (false).
