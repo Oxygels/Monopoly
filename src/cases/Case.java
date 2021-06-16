@@ -12,7 +12,7 @@ public abstract class Case {
      * Constructeur standard de la classe Case permettant de construire une case.
      *
      * @param id Un entier faisant office d'identifiant pour la case a construire.
-     * @param nom Une chaine de caractere amenee a contenir le nom de la case a contenir.
+     * @param nom Une chaine de caractere amenee a contenir le nom de la case a construire.
      */
 
     public Case(int id, String nom) {
@@ -40,7 +40,7 @@ public abstract class Case {
     }
 
     /**
-     * Methode publique redefinie par heritage dans les classes heritant de la classe Case.
+     * Methode redefinie par heritage dans les classes heritant de la classe Case.
      *
      * @param joueur Un joueur designant le joueur auquel sera applique l'action.
      *

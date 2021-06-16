@@ -22,6 +22,12 @@ public class Joueur {
     private int position;
     private int montantBillet;
 
+    /**
+     * Constructeur standard de la classe Joueur permettant de construire un joueur.
+     *
+     * @param nom Une chaine de caractere amenee a contenir le nom du joueur a construire.
+     */
+
     public Joueur(String nom) {
         setNom(nom);
         position = 0;
@@ -76,6 +82,17 @@ public class Joueur {
 
     //--------------------METHODES METIERS-----------------------------//
 
+    /**
+     * Methode permettant au joueur d'acheter une propriete.
+     *
+     * @param T Une propriete qui n'est autre que la propriete que le joueur souhaite acheter.
+     * @throws MonopolyException Exception relative au fait que le joueur est susceptible, soit d'essayer d'acheter une
+     *                           propriete qui a deja ete achetee, soit d'essayer d'acheter une propriete qu'il ne peut
+     *                           pas s'offrir par manque d'argent.
+     *
+     * @see Propriete
+     */
+
     public void acheterPropriete(Propriete T) throws MonopolyException {
         if (T == null)
             throw new IllegalArgumentException("Propriete ne peut etre null");
@@ -90,6 +107,15 @@ public class Joueur {
         proprietesPossedees.add(T);
     }
 
+    /**
+     * Methode permettant au joueur de payer un montant a un autre joueur j.
+     *
+     * @param montant Le montant de la transaction a effectuer.
+     * @param j Le joueur qui recoit l'argent de la transaction.
+     * @throws FailliteException Exception relative au fait que le joueur peut ne pas posseder la somme d'argent qu'il
+     *                           doit au joueur j.
+     */
+
     public void payer(int montant, Joueur j) throws FailliteException {
         if (montantBillet - montant < 0)
             throw new FailliteException("Le joueur n'a pas assez d'argent pour payer");
@@ -98,6 +124,17 @@ public class Joueur {
         j.gagnerArgent(montant);
         montantBillet -= montant;
     }
+
+    /**
+     * Methode permettant au joueur de payer un montant a la banque.
+     *
+     * @param montant Le montant de la transaction a effectuer.
+     * @param parcGratuit Variable booleenne permettant de specifier si oui ou non, l'argent ira au parc gratuit
+     * @throws FailliteException Exception relative au fait que le joueur peut ne pas posseder la somme d'argent qu'il
+     *                           doit au joueur j.
+     *
+     * @see cases.CaseParkingGratuit
+     */
 
     public void payerBanque(int montant, boolean parcGratuit) throws FailliteException {
         if (montantBillet - montant < 0)
@@ -110,13 +147,35 @@ public class Joueur {
         montantBillet -= montant;
     }
 
+    /**
+     * Methode permettant au joueur de payer un montant a la banque.
+     *
+     * @param money Le montant que le joueur est amene a gagner.
+     */
+
     public void gagnerArgent(int money) {
         this.montantBillet += money;
     }
 
+    /**
+     * Methode permttant au joueur de  recevoir une carte "Libere de Prison".
+     *
+     * @param carte Une carte designant la carte "Libere de Prison en question" a attribuer au joueur, du fait qu'il
+     *              y ait un nombre limite de ce type de carte.
+     *
+     * @see CarteLibereDePrison
+     */
+
     public void recevoirCarteLibPrison(CarteLibereDePrison carte) {
         cartesLibPrison.push(carte);
     }
+
+    /**
+     * Methode permettant au joueur d'utiliser sa carte "Libere de Prison".
+     *
+     * @throws MonopolyException Exception relative au fait qu'un joueur ne peut pas utiliser de carte
+     *                           "Libere de Prison" s'il ne la possede pas au prealable.
+     */
 
     public void utiliserCarteLibPrison() throws MonopolyException {
         if (cartesLibPrison.size() == 0)
@@ -143,6 +202,13 @@ public class Joueur {
         }
     }
 
+    /**
+     * Methode permettant de finir le tour d'un joueur et ainsi de passer au tour du joueur suivant.
+     *
+     * @throws MonopolyException Exception relative au fait qu'un joueur ne peut finir son tour si ce n'est pas a lui
+     *                           de jouer.
+     */
+
     public void finirTour() throws MonopolyException {
         try {
             Plateau plateau = Plateau.getPlateau();
@@ -155,6 +221,14 @@ public class Joueur {
         }
     }
 
+    /**
+     * Methode permettant au joueur de se deplacer a une desination.
+     *
+     * @param destination La desination a laquelle le joueur sera deplace.
+     * @throws MonopolyException Exception relative au fait que le deplacement jusqu'a la destination doit etre
+     *                           represente par un nombre positif ou nul.
+     */
+
     public void seDeplacer(int destination) throws MonopolyException {
         if (destination < 0)
             throw new IllegalArgumentException("La destination doit etre un nombre positif");
@@ -162,6 +236,17 @@ public class Joueur {
             this.position = destination;
         getPositionCase().action(this);
     }
+
+    /**
+     * Methode permettant au joueur d'avancer d'un certain nombre de cases.
+     *
+     * @param montant Le nombre de case(s) a parcourir par le joueur.
+     * @return La case de destination des des.
+     * @throws MonopolyException Exception relative au fait que le deplacement jusqu'a la destination doit etre
+     *                           represente par un nombre positif ou nul.
+     *
+     * @see Case
+     */
 
     public Case avancer(int montant) throws MonopolyException {
         if (montant < 0)
@@ -176,6 +261,17 @@ public class Joueur {
         getPositionCase().action(this);
         return casePreAction;
     }
+
+    /**
+     * Methode permettant au joueur d'acheter/construire une maison.
+     *
+     * @param T La maison a acheter/construire.
+     * @throws MonopolyException Exception relative au fait qu'un joueur ne peut pas acheter de maison s'il ne possede
+     *                           pas tous les terrains de la meme couleur et qu'il ne peut pas avoir deux maisons
+     *                           d'ecart entre deux terrains de la meme couleur.
+     *
+     * @see TerrainConstructible
+     */
 
     public void acheterMaison(TerrainConstructible T) throws MonopolyException {
         if (T == null)
@@ -197,6 +293,17 @@ public class Joueur {
         payerBanque(T.getPrixMaison(), false);
     }
 
+    /**
+     * Methode permettant au joueur d'acheter/construire un hotel.
+     *
+     * @param T L'hotel a acheter/construire.
+     * @throws MonopolyException Exception relative au fait qu'un joueur ne peut pas acheter de maison s'il ne possede
+     *                           pas tous les terrains de la meme couleur et qu'il ne peut pas avoir deux maisons
+     *                           d'ecart entre deux terrains de la meme couleur.
+     *
+     * @see TerrainConstructible
+     */
+
     public void acheterHotel(TerrainConstructible T) throws MonopolyException {
         if (T == null)
             throw new IllegalArgumentException("Le terrain ne doit pas etre null");
@@ -217,6 +324,17 @@ public class Joueur {
         payerBanque(T.getPrixMaison(), false);
     }
 
+    /**
+     * Methode permettant au joueur de vendre une maison.
+     *
+     * @param T La maison a vendre.
+     * @throws MonopolyException Exception relative au fait qu'il faut d'abord vendre l'hotel avant de pouvoir vendre
+     *                           des maisons ou bien que l'on ne peut pas avoir deux maisons d'ecart entre deux
+     *                           terrains de la meme couleur.
+     *
+     * @see TerrainConstructible
+     */
+
     public void vendreMaison(TerrainConstructible T) throws MonopolyException {
         if (T == null)
             throw new IllegalArgumentException("Le terrain ne doit pas etre null");
@@ -234,6 +352,16 @@ public class Joueur {
         gagnerArgent(T.getPrixMaison() / 2);
     }
 
+    /**
+     * Methode permettant au joueur de vendre une hotel.
+     *
+     * @param T L'hotel a vendre.
+     * @throws MonopolyException Exception relative au fait que l'on ne peut pas avoir deux maisons d'ecart entre deux
+     *                           terrains de la meme couleur.
+     *
+     * @see TerrainConstructible
+     */
+
     public void vendreHotel(TerrainConstructible T) throws MonopolyException {
         if (T == null)
             throw new IllegalArgumentException("Le terrain ne doit pas etre null");
@@ -249,6 +377,14 @@ public class Joueur {
         gagnerArgent(T.getPrixMaison() / 2);
     }
 
+    /**
+     * Methode permettant d'appliquer la regle des deux maisons.
+     *
+     * @param terrain Le terrain source necessaire a l'application de la regle des deux maisons.
+     * @return Un booleen designant si la regle des deux maisons est appliquee (true) ou non (false).
+     *
+     * @see TerrainConstructible
+     */
 
     private boolean regleDes2Maisons(TerrainConstructible terrain) {
         List<Integer> s = getProprietesPossedees()
@@ -267,6 +403,15 @@ public class Joueur {
         // valeurs ne peut excéder deux, en particulier les cases qui ont le plus et le moins de maison
     }
 
+    /**
+     * Methode permettant de verifier si le joueur possede toutes les couleurs ou non
+     *
+     * @param T Le terrain d'une couleur en particulier.
+     * @return Un booleen designant si toutes les couleurs sont possedees (true) ou non (false).
+     *
+     * @see TerrainConstructible
+     */
+
     public boolean possedePasToutesLesCouleurs(TerrainConstructible T) {
         return Plateau.getPlateau().getCases().stream().anyMatch(c -> {
             return (c instanceof TerrainConstructible)
@@ -274,6 +419,13 @@ public class Joueur {
                     && ((TerrainConstructible) c).getProprietaire() != this;
         });
     }
+
+    /**
+     * Methode permettant au joueur de payer la prison.
+     *
+     * @throws MonopolyException Exception relative au fait que le joueur ne peut pas payer la prison s'il n'est pas
+     *                           sur la case Prison.
+     */
 
     public void payerPrison() throws MonopolyException {
         Plateau plateau = Plateau.getPlateau();

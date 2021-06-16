@@ -58,7 +58,7 @@ public abstract class Propriete extends Case {
     }
 
     /**
-     * Methode publique redefinie par heritage, la classe Propriete heritant de la classe Case.
+     * Methode redefinie par heritage, la classe Propriete heritant de la classe Case.
      *
      * @param joueur Un joueur designant le joueur auquel sera applique l'action.
      * @throws FailliteException Exception relative a la somme d'argent que le joueur peut payer dans l'action.
@@ -78,7 +78,7 @@ public abstract class Propriete extends Case {
     }
 
     /**
-     * Methode publique abstraite visant a calculer le loyer d'une propriete.
+     * Methode abstraite visant a calculer le loyer d'une propriete.
      *
      * @return Une valeur entiere designant le loyer precedemment calcule.
      */
