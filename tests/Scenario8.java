@@ -20,7 +20,6 @@ public class Scenario8 {
 
     @Test
     public void launchScenario8() throws MonopolyException {
-        System.out.println("[DEBUT] Scénario 8 : Tests pour l’achat d’une maison");
         Plateau plateau = Plateau.getPlateau();
 
         Joueur quentin = new Joueur("Quentin");
@@ -46,8 +45,5 @@ public class Scenario8 {
 
         jules.seDeplacer(plateau.getCase("Rue de Vaugirard").getId());
         assertEquals(1470, jules.getMontantBillet());
-
-
-        System.out.println("[REUSSITE] Scénario 8 : Tests pour l’achat d’une maison\n");
     }
 }

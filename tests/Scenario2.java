@@ -16,7 +16,6 @@ public class Scenario2 {
 
     @Test
     public void launchScenario2() {
-        System.out.println("[DEBUT] Scénario 2 : Tests pour la construction d'un joueur");
         Plateau plateau = Plateau.getPlateau();
         Joueur joueur = new Joueur("Quentin");
         plateau.ajouterJoueur(joueur);
@@ -27,6 +26,5 @@ public class Scenario2 {
         Joueur joueur2 = new Joueur("Yacine");
         plateau.ajouterJoueur(joueur2);
         assertEquals(2, plateau.getNbJoueurs());
-        System.out.println("[REUSSITE] Scénario 2 : Tests pour la construction d'un joueur\n");
     }
 }

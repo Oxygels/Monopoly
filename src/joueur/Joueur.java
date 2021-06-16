@@ -123,7 +123,14 @@ public class Joueur {
             throw new MonopolyException("Pas de carte \"Libéré de prison\" possédée");
         else {
             CarteLibereDePrison carte = cartesLibPrison.pop();
-            carte.actionCarte(this);
+            try {
+                carte.actionCarte(this);
+            } catch (MonopolyException e) {
+                cartesLibPrison.push(carte);
+                // Si on a pas le droit d'utiliser la carte, on la remet dans la pile du joueur
+                // Et on propage l'exception à l'interface
+                throw e;
+            }
             switch (carte.getCategorieCarte()) {
                 // On place la carte en dessous de la pile
                 case Chance:
@@ -180,14 +187,68 @@ public class Joueur {
 
         if (possedePasToutesLesCouleurs(T))
             throw new MonopolyException("On ne peut pas acheter de maison si on ne possede pas tous les terrains" +
-                    "de la meme couleur");
+                    " de la meme couleur");
         T.ajouterMaison();
         if (!regleDes2Maisons(T)) {
             T.retirerMaison();
-            throw new MonopolyException("On ne peut pas avoir 2 maisons d'écart entre deux terrains de la meme famille");
+            throw new MonopolyException("On ne peut pas avoir 2 maisons d'écart " +
+                    "entre deux terrains de la meme couleur");
         }
         payerBanque(T.getPrixMaison(), false);
     }
+
+    public void acheterHotel(TerrainConstructible T) throws MonopolyException {
+        if (T == null)
+            throw new IllegalArgumentException("Le terrain ne doit pas etre null");
+
+        if (!proprietesPossedees.contains(T))
+            throw new IllegalArgumentException("On ne peut pas acheter un hôtel " +
+                    "sur un terrain qu'on ne possede pas");
+
+        if (possedePasToutesLesCouleurs(T))
+            throw new MonopolyException("On ne peut pas acheter de maison si on ne possede pas tous les terrains" +
+                    " de la meme couleur");
+        T.ajouterHotel();
+        if (!regleDes2Maisons(T)) {
+            T.retirerHotel();
+            throw new MonopolyException("On ne peut pas avoir 2 maisons d'écart " +
+                    "entre deux terrains de la meme couleur");
+        }
+        payerBanque(T.getPrixMaison(), false);
+    }
+
+    public void vendreMaison(TerrainConstructible T) throws MonopolyException {
+        if (T == null)
+            throw new IllegalArgumentException("Le terrain ne doit pas etre null");
+        if (!proprietesPossedees.contains(T))
+            throw new IllegalArgumentException("On ne peut pas vendre une maison " +
+                    "sur un terrain qu'on ne possede pas");
+        if (T.getNbHotel() != 0)
+            throw new MonopolyException("Il faut d'abord vendre l'hôtel avant de pouvoir vendre des maisons");
+        T.retirerMaison();
+        if (!regleDes2Maisons(T)) {
+            T.ajouterMaison();
+            throw new MonopolyException("On ne peut pas avoir 2 maisons d'écart " +
+                    "entre deux terrains de la meme couleur");
+        }
+        gagnerArgent(T.getPrixMaison() / 2);
+    }
+
+    public void vendreHotel(TerrainConstructible T) throws MonopolyException {
+        if (T == null)
+            throw new IllegalArgumentException("Le terrain ne doit pas etre null");
+        if (!proprietesPossedees.contains(T))
+            throw new IllegalArgumentException("On ne peut pas vendre un hôtel " +
+                    "sur un terrain qu'on ne possede pas");
+        T.retirerHotel();
+        if (!regleDes2Maisons(T)) {
+            T.ajouterHotel();
+            throw new MonopolyException("On ne peut pas avoir 2 maisons d'écart " +
+                    "entre deux terrains de la meme couleur");
+        }
+        gagnerArgent(T.getPrixMaison() / 2);
+    }
+
 
     private boolean regleDes2Maisons(TerrainConstructible terrain) {
         List<Integer> s = getProprietesPossedees()
@@ -195,7 +256,7 @@ public class Joueur {
                 .filter(t ->
                         t instanceof TerrainConstructible
                                 && ((TerrainConstructible) t).getCouleur().equals(terrain.getCouleur())
-                ).map(t -> ((TerrainConstructible) t).getNbMaison()).collect(Collectors.toList());
+                ).map(t -> ((TerrainConstructible) t).getInternalNb()).collect(Collectors.toList());
         // On convertit l'ensemble des cases de la même famille
         // en son nombre de maison sur chacun de ces terrains
         return s.stream().max(Integer::compare).get() - s.stream().min(Integer::compare).get() < 2;
@@ -212,16 +273,6 @@ public class Joueur {
                     && ((TerrainConstructible) c).getCouleur().equals(T.getCouleur())
                     && ((TerrainConstructible) c).getProprietaire() != this;
         });
-    }
-
-    public void vendreMaison(TerrainConstructible T) throws MonopolyException {
-        if (T == null)
-            throw new IllegalArgumentException("Le terrain ne doit pas etre null");
-        if (!proprietesPossedees.contains(T))
-            throw new IllegalArgumentException("On ne peut pas vendre une maison " +
-                    "sur un terrain qu'on ne possede pas");
-        T.retirerMaison();
-        gagnerArgent(T.getPrix() / 2);
     }
 
     public void payerPrison() throws MonopolyException {

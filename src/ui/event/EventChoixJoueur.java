@@ -1,6 +1,7 @@
 package ui.event;
 
 import application.MonopolyGUI;
+import cases.Propriete;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ToggleButton;
@@ -24,11 +25,12 @@ public class EventChoixJoueur implements EventHandler<ActionEvent> {
             Joueur j = (Joueur) b.getUserData();
 
             monopoly.setJoueurCourant(j);
-            monopoly.DialogInfo(monopoly.getJoueurCourant().getNom() + " doit jouer");
             monopoly.getZoneProprietes().getItems().clear();
-            // Maj du porte monnaie
-            monopoly.getTfPorteMonnaie().setText(String.valueOf(j.getMontantBillet()));
-            // Maj des propriétés
+            for (Propriete p : j.getProprietesPossedees()) {
+                monopoly.getZoneProprietes().getItems().add(p);
+            }
+            monopoly.DialogInfo(monopoly.getJoueurCourant().getNom() + " doit jouer");
+            monopoly.updateUi();
         }
     }
 }

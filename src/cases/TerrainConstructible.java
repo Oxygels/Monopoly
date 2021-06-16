@@ -65,13 +65,31 @@ public class TerrainConstructible extends Propriete {
         return prixMaison;
     }
 
-    public int getNbMaison() {
+    public int getInternalNb() {
         return nbMaison;
     }
 
+    public int getNbMaison() {
+        return nbMaison == 5 ? 0 : nbMaison;
+    }
+
+    public int getNbHotel() {
+        return nbMaison == 5 ? 1 : 0;
+    }
+
     public void ajouterMaison() throws MonopolyException {
+        if (nbMaison == 4)
+            throw new MonopolyException("On ne peut plus acheter de maison quand on en a 4");
         if (nbMaison == 5)
-            throw new MonopolyException("On ne peut plus acheter quand on possede deja un hotel.");
+            throw new MonopolyException("On ne peut plus acheter de maison quand on a un hôtel");
+        nbMaison++;
+    }
+
+    public void ajouterHotel() throws MonopolyException {
+        if (nbMaison >= 5)
+            throw new MonopolyException("On ne peut pas avoir plus qu'un hôtel sur un terrain");
+        if (nbMaison <= 3)
+            throw new MonopolyException("Il faut déjà avoir 4 maisons sur le terrain pour construire un hôtel");
         nbMaison++;
     }
 
@@ -81,9 +99,15 @@ public class TerrainConstructible extends Propriete {
         nbMaison--;
     }
 
+    public void retirerHotel() throws MonopolyException {
+        if (nbMaison != 5)
+            throw new MonopolyException("Il faut qu'un hôtel soit construit pour le vendre");
+        nbMaison--;
+    }
+
     @Override
     public int calculerLoyer() {
-        switch (getNbMaison()) {
+        switch (nbMaison) {
             case 0:
                 if (getProprietaire() != null && !getProprietaire().possedePasToutesLesCouleurs(this))
                     return getLoyerNu() * 2;

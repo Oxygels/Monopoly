@@ -18,7 +18,6 @@ public class Scenario6 {
 
     @Test
     public void launchScenario6() throws MonopolyException {
-        System.out.println("[DEBUT] Scénario 6 : Tests pour le déplacement d’un joueur sur une gare achetée");
         Plateau plateau = Plateau.getPlateau();
 
         Joueur quentin = new Joueur("Quentin");
@@ -41,8 +40,5 @@ public class Scenario6 {
         jules.seDeplacer(plateau.getCase("Gare du Nord").getId());
         assertEquals(1350, jules.getMontantBillet());
         assertEquals(1250, quentin.getMontantBillet());
-
-        System.out.println("[REUSSITE] Scénario 6 : Tests pour le déplacement d’un joueur sur une gare achetée\n");
-
     }
 }

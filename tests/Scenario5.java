@@ -19,9 +19,6 @@ public class Scenario5 {
 
     @Test
     public void launchScenario5() throws MonopolyException {
-        System.out.println("[DEBUT] Scénario 5 : Tests pour le déplacement d’un joueur sur " +
-                "un terrain constructible acheté");
-
         Plateau plateau = Plateau.getPlateau();
 
         Joueur quentin = new Joueur("Quentin");
@@ -54,8 +51,5 @@ public class Scenario5 {
             exception = true;
         }
         assertTrue(exception);
-
-        System.out.println("[REUSSITE] Scénario 5 : Tests pour le déplacement d’un joueur sur " +
-                "un terrain constructible acheté\n");
     }
 }

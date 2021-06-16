@@ -25,66 +25,76 @@ public class EventJouer implements EventHandler<ActionEvent> {
         String tfDe1 = monopoly.getTfValeurDe1().getText();
         String tfDe2 = monopoly.getTfValeurDe2().getText();
 
-        int de1 = Integer.parseInt(tfDe1);
-        int de2 = Integer.parseInt(tfDe2);
-
-        int nbCases = de1 + de2;
-
-        int nbcarteslib = monopoly.getJoueurCourant().getNbCartesLibPrison();
         try {
-            Case destination = monopoly.avancer(nbCases);
-            // Pour montrer au joueur qu'il a avancé sur une case pioche avant de voir le dialogue
-            monopoly.getUiPlateau().dessiner(monopoly.getGrillePane());
+            int de1 = Integer.parseInt(tfDe1);
+            int de2 = Integer.parseInt(tfDe2);
 
-            String enonce;
+            int nbCases = de1 + de2;
 
-            if (destination instanceof CasePiocheChance) {
-                if (monopoly.getJoueurCourant().getNbCartesLibPrison() > nbcarteslib) {
-                    enonce = "Vous êtes libéré de Prison";
-                } else
-                    enonce = Plateau.getPlateau().getCartesChance().get(0).getEnonce();
+            int nbcarteslib = monopoly.getJoueurCourant().getNbCartesLibPrison();
+            try {
+                Case destination = monopoly.avancer(nbCases);
+                // Pour montrer au joueur qu'il a avancé sur une case pioche avant de voir le dialogue
+                monopoly.getUiPlateau().dessiner(monopoly.getGrillePane());
 
-                monopoly.DialogInfo("Vous avez pioché la carte \"Chance\" suivante:\n\n" + enonce);
-            } else if (destination instanceof CasePiocheCommunaute) {
-                if (monopoly.getJoueurCourant().getNbCartesLibPrison() > nbcarteslib) {
-                    enonce = "Vous êtes libéré de Prison";
-                } else
-                    enonce = Plateau.getPlateau().getCartesChance().get(0).getEnonce();
-                monopoly.DialogInfo("Vous avez pioché la carte \"Caisse de Communauté\" suivante :\n\n" + enonce);
-            }
-        } catch (FailliteException e) {
-            monopoly.retirerJoueur(monopoly.getJoueurCourant());
-        } catch (MonopolyException e) {
-            e.printStackTrace();
-        }
+                String enonce;
 
-        if (de1 == de2) {
-            int nbDbl = monopoly.getNbDoubles();
+                if (destination instanceof CasePiocheChance) {
+                    if (monopoly.getJoueurCourant().getNbCartesLibPrison() > nbcarteslib) {
+                        enonce = "Vous êtes libéré de Prison";
+                    } else
+                        enonce = Plateau.getPlateau().getCartesChance().get(0).getEnonce();
 
-            nbDbl++;
-            monopoly.setNbDoubles(nbDbl);
-
-            if (nbDbl == 1)
-                monopoly.getMessageFooter().setText("C'est ton premier double !");
-            else if (nbDbl == 2)
-                monopoly.getMessageFooter().setText("C'est ton deuxième double !! Encore un et c'est la taule...");
-            else {
-                monopoly.getMessageFooter().setText("Police, menottes, prison...");
-
-                try {
-                    int prison = Plateau.getPlateau().getCase("Prison").getId();
-                    monopoly.seDeplacer(prison);
-                } catch (MonopolyException e) {
-                    e.printStackTrace();
+                    monopoly.DialogInfo("Vous avez pioché la carte \"Chance\" suivante:\n\n" + enonce);
+                } else if (destination instanceof CasePiocheCommunaute) {
+                    if (monopoly.getJoueurCourant().getNbCartesLibPrison() > nbcarteslib) {
+                        enonce = "Vous êtes libéré de Prison";
+                    } else
+                        enonce = Plateau.getPlateau().getCartesChance().get(0).getEnonce();
+                    monopoly.DialogInfo("Vous avez pioché la carte \"Caisse de Communauté\" suivante :\n\n" + enonce);
                 }
+            } catch (FailliteException e) {
+                monopoly.DialogInfo(e.getMessage());
+                monopoly.DialogInfo(monopoly.getJoueurCourant().getNom() + " a fait faillite");
+                monopoly.retirerJoueur(monopoly.getJoueurCourant());
+                monopoly.setNbDoubles(0);
+            } catch (MonopolyException e) {
+                monopoly.DialogAction(e.getMessage(), true);
+            } finally {
+                // Retirer le pion du plateau si le joueur a fait faillite ou le voir se déplacer si il a tiré
+                // une carte de déplacement
+                monopoly.updateUi();
+            }
 
+            if (de1 == de2) {
+                int nbDbl = monopoly.getNbDoubles();
+
+                nbDbl++;
+                monopoly.setNbDoubles(nbDbl);
+
+                if (nbDbl == 1)
+                    monopoly.getMessageFooter().setText("C'est ton premier double !");
+                else if (nbDbl == 2)
+                    monopoly.getMessageFooter().setText("C'est ton deuxième double !! Encore un et c'est la taule...");
+                else {
+                    monopoly.getMessageFooter().setText("Police, menottes, prison...");
+
+                    try {
+                        int prison = Plateau.getPlateau().getCase("Prison").getId();
+                        monopoly.seDeplacer(prison);
+                    } catch (MonopolyException e) {
+                        e.printStackTrace();
+                    }
+
+                    monopoly.setNbDoubles(0);
+                }
+            } else {
                 monopoly.setNbDoubles(0);
             }
-        } else {
-            monopoly.setNbDoubles(0);
+            // Voir le pion aller en prison si il a fait 3x un double
+            monopoly.updateUi();
+        } catch (NumberFormatException e) {
+            monopoly.DialogAction("Les valeurs des dés ne sont pas des entiers", true);
         }
-        monopoly.getTfPorteMonnaie().setText(String.valueOf(monopoly.getJoueurCourant().getMontantBillet()));
-        Case cases = monopoly.getJoueurCourant().getPositionCase();
-        monopoly.getUiPlateau().dessiner(monopoly.getGrillePane());
     }
 }

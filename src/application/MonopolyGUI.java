@@ -3,8 +3,10 @@ package application;
 
 import cases.Case;
 import cases.Propriete;
+import exception.FailliteException;
 import exception.MonopolyException;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,7 +23,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import joueur.Joueur;
 import plateau.Plateau;
-import ui.FenetreTerrain;
 import ui.Pion;
 import ui.UIPlateau;
 import ui.event.*;
@@ -39,27 +40,18 @@ public class MonopolyGUI extends Application {
 
 
     private final ArrayList<ToggleButton> tabBoutonsJoueurs = new ArrayList<ToggleButton>();
-    /**
-     * YL : la liste des joueurs est représentée par une liste de noms, ainsi que la liste des pions.
-     * --> A modifier !!
-     */
     private final ArrayList<Joueur> listeJoueurs = new ArrayList<Joueur>();
     private final ArrayList<Pion> listePions = new ArrayList<Pion>();
-    private final FenetreTerrain fenetreTerrain = new FenetreTerrain();
     private UIPlateau uiPlateau;
     private Canvas grillePane;
     private Button bAvancer;
     private TextField tfDe1;
     private TextField tfDe2;
     private Label messageFooter;
-    /**
-     * YL : ListView peut contenir n'importe quel type d'objet. Pour l'instant, ce sont des String
-     * --> A modifier !!
-     */
     private ListView<Propriete> proprietesJoueurCourant;
     private Joueur joueurCourant;
 
-    private int terrainSelectionne = -1;
+    private Propriete terrainSelectionne = null;
     private TextField tfPorteMonnaie;
 
     // TODO: Prendre en compte dans le lancer de dés dans EventJouer
@@ -130,6 +122,11 @@ public class MonopolyGUI extends Application {
         }
     }
 
+    public void updateUi() {
+        tfPorteMonnaie.setText(String.valueOf(getJoueurCourant().getMontantBillet()));
+        uiPlateau.dessiner(grillePane);
+    }
+
     private void initPanneauDroit(BorderPane root) {
         VBox panneauDroit = new VBox();
         panneauDroit.setAlignment(Pos.TOP_CENTER);
@@ -182,7 +179,7 @@ public class MonopolyGUI extends Application {
         proprietesJoueurCourant.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent arg0) {
-                terrainSelectionne = proprietesJoueurCourant.getSelectionModel().getSelectedIndex();
+                terrainSelectionne = proprietesJoueurCourant.getSelectionModel().getSelectedItem();
             }
         });
 
@@ -210,6 +207,19 @@ public class MonopolyGUI extends Application {
 
         Button payerPrison = new Button(ACTION_PAYER_PRISON);
         box.getChildren().add(payerPrison);
+        payerPrison.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    getJoueurCourant().payerPrison();
+                } catch (FailliteException e) {
+                    retirerJoueur(getJoueurCourant());
+                } catch (MonopolyException e) {
+                    DialogAction(e.getMessage(), true);
+                }
+
+            }
+        });
 
         Button liberation = new Button(ACTION_LIBERATION);
         liberation.setOnAction(new EventHandler<ActionEvent>() {
@@ -288,14 +298,14 @@ public class MonopolyGUI extends Application {
 
     public void DialogAction(String message, boolean erreur) {
         Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Achat d'un terrain");
+        alert.setTitle("Attention !");
         alert.setContentText(message);
 
         if (erreur) {
             alert.setHeaderText("Tu ne peux pas faire cette action !");
         } else {
             alert.setAlertType(AlertType.INFORMATION);
-            alert.setHeaderText("Achat effectué");
+            alert.setHeaderText("Succès");
         }
 
         alert.showAndWait();
@@ -320,12 +330,8 @@ public class MonopolyGUI extends Application {
         return messageFooter;
     }
 
-    public int getTerrainSelectionne() {
+    public Propriete getTerrainSelectionne() {
         return terrainSelectionne;
-    }
-
-    public FenetreTerrain getFenetreTerrain() {
-        return fenetreTerrain;
     }
 
     public Joueur getJoueurCourant() {
@@ -333,12 +339,7 @@ public class MonopolyGUI extends Application {
     }
 
     public void setJoueurCourant(Joueur j) {
-        getZoneProprietes().getItems().clear();
         joueurCourant = j;
-        for (Propriete p : j.getProprietesPossedees()) {
-            getZoneProprietes().getItems().add(p);
-        }
-
     }
 
     public Case avancer(int nbCases) throws MonopolyException {
@@ -353,11 +354,23 @@ public class MonopolyGUI extends Application {
         int indexOfJ = getListeJoueurs().indexOf(j);
         getListeJoueurs().remove(indexOfJ);
         getListePions().remove(indexOfJ);
+        // Il faut aussi retirer le bouton
+        getTabBoutonsJoueurs().remove(j);
+        if (getListeJoueurs().size() == 1) {
+            DialogInfo(getListeJoueurs().get(0).getNom() + " a gagné la partie");
+            Platform.exit();
+        }
     }
 
     public void seDeplacer(int destination) throws MonopolyException {
         getJoueurCourant().seDeplacer(destination);
         Pion pionCourant = getListePions().get(getListeJoueurs().indexOf(getJoueurCourant()));
         pionCourant.setPosition(destination);
+    }
+
+    public void acheterPropriete(Propriete p) throws MonopolyException {
+        getJoueurCourant().acheterPropriete(p);
+        getZoneProprietes().getItems().add(p);
+
     }
 }

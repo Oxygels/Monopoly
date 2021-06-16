@@ -18,8 +18,6 @@ public class Scenario4 {
 
     @Test
     public void launchScenario4() throws MonopolyException {
-        System.out.println("[DEBUT] Scénario 4 : Tests pour l’achat d’un terrain");
-
         Plateau plateau = Plateau.getPlateau();
         Joueur joueur = new Joueur("Quentin");
         plateau.ajouterJoueur(joueur);
@@ -43,8 +41,5 @@ public class Scenario4 {
             exception = true;
         }
         assertTrue(exception);
-
-        System.out.println("[REUSSITE] Scénario 4 : Tests pour l’achat d’un terrain\n");
-
     }
 }

@@ -18,7 +18,6 @@ public class Scenario11 {
 
     @Test
     public void launchScenario11() throws MonopolyException {
-        System.out.println("[DEBUT] Scénario 11 : Tests pour les cartes « Chance » ou « Caisse de communauté »");
         Plateau plateau = Plateau.getPlateau();
 
         Joueur jules = new Joueur("Jules");
@@ -43,7 +42,5 @@ public class Scenario11 {
         jules.avancer(0);
         assertEquals(1550, jules.getMontantBillet());
         assertEquals("Boulevard de Belleville", jules.getPositionCase().getNom());
-
-        System.out.println("[REUSSITE] Scénario 11 : Tests pour les cartes « Chance » ou « Caisse de communauté »\n");
     }
 }

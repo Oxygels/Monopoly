@@ -17,7 +17,6 @@ public class Scenario10 {
 
     @Test
     public void launchScenario10() throws MonopolyException {
-        System.out.println("[DEBUT] Scénario 10 : Tests pour le déplacement d’un joueur sur la case « Aller en Prison »");
         Plateau plateau = Plateau.getPlateau();
 
         Joueur jules = new Joueur("Jules");
@@ -29,7 +28,5 @@ public class Scenario10 {
         jules.payerPrison();
         assertEquals(1450, jules.getMontantBillet());
         assertEquals("Simple visite", jules.getPositionCase().getNom());
-
-        System.out.println("[REUSSITE] Scénario 10 : Tests pour le déplacement d’un joueur sur la case « Aller en Prison »\n");
     }
 }

@@ -18,8 +18,6 @@ public class Scenario3 {
 
     @Test
     public void launchScenario3() throws MonopolyException {
-        System.out.println("[DEBUT] Scénario 3 : Tests pour le déplacement simple d’un joueur");
-
         Plateau plateau = Plateau.getPlateau();
         Joueur j = new Joueur("Quentin");
         j.avancer(5);
@@ -43,6 +41,5 @@ public class Scenario3 {
             test = true;
         }
         assertTrue(test);
-        System.out.println("[REUSSITE] Scénario 3 : Tests pour le déplacement simple d’un joueur\n");
     }
 }

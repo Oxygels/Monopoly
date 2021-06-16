@@ -27,12 +27,10 @@ public class EventAchatTerrain implements EventHandler<ActionEvent> {
         else // Acheter (vérfier les conditions dans la méthode acheterTerrain dans Joueur)
         {
             try {
-                monopoly.getJoueurCourant().acheterPropriete((Propriete) caseCourante);
+                monopoly.acheterPropriete((Propriete) caseCourante);
                 monopoly.DialogInfo("Vous avez acheté  :  " + caseCourante.getNom());
 
-                // Met à jour le panneau des propriétés
-                monopoly.getZoneProprietes().getItems().add((Propriete) caseCourante);
-                monopoly.getTfPorteMonnaie().setText(String.valueOf(monopoly.getJoueurCourant().getMontantBillet()));
+                monopoly.updateUi();
 
             } catch (MonopolyException mE) {
                 monopoly.DialogAction(mE.getMessage(), true);

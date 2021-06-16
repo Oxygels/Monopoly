@@ -21,7 +21,9 @@ public class EventPasser implements EventHandler<ActionEvent> {
         // Décrit ce qui se  passe après le changement de joueur
         ArrayList<Joueur> lesJoueurs = monopoly.getListeJoueurs();
         Joueur jc = monopoly.getJoueurCourant();
-        int i = lesJoueurs.indexOf(jc);
+        int i = jc == null ? 0 : lesJoueurs.indexOf(jc);
+        // jc peut être null si le joueur courant a fait faillite, il n'existe donc plus
+        // Il doit cependant rester un joueur
         int suivant = (i + 1) % lesJoueurs.size();
 
         ToggleButton button = monopoly.getTabBoutonsJoueurs().get(suivant);

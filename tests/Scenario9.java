@@ -19,7 +19,6 @@ public class Scenario9 {
 
     @Test
     public void launchScenario9() throws MonopolyException {
-        System.out.println("[DEBUT] Scénario 9 : Tests pour l’achat d’un hôtel");
         Plateau plateau = Plateau.getPlateau();
 
         Joueur quentin = new Joueur("Quentin");
@@ -50,12 +49,10 @@ public class Scenario9 {
         assertTrue(exception);
 
         quentin.acheterMaison(vaugirard);
-        quentin.acheterMaison(republique);
+        quentin.acheterHotel(republique);
         assertEquals(530, quentin.getMontantBillet());
         jules.seDeplacer(plateau.getCase("Avenue de la République").getId());
         assertEquals(900, jules.getMontantBillet());
         assertEquals(1130, quentin.getMontantBillet());
-
-        System.out.println("[REUSSITE] Scénario 9 : Tests pour l’achat d’un hôtel\n");
     }
 }

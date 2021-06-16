@@ -20,7 +20,6 @@ public class Scenario1 {
 
     @Test
     public void launchScenario1() {
-        System.out.println("[DEBUT] Scénario 1 : Tests pour la construction du plateau");
         Plateau plateau = Plateau.getPlateau();
 
         assertEquals(0, plateau.getNbJoueurs());
@@ -40,7 +39,5 @@ public class Scenario1 {
         // Vérification que toutes les cases n'ont pas de propriété
 
         assertTrue(cases.stream().allMatch(c -> !(c instanceof Propriete) || ((Propriete) c).getProprietaire() == null));
-
-        System.out.println("[REUSSITE] Scénario 1 : Tests pour la construction du plateau\n");
     }
 }

@@ -18,8 +18,6 @@ public class Scenario7 {
 
     @Test
     public void launchScenario7() throws MonopolyException {
-        System.out.println("[DEBUT] Scénario 7 : Tests pour le déplacement d’un joueur sur une compagnie achetée");
-
         Plateau plateau = Plateau.getPlateau();
 
         Joueur quentin = new Joueur("Quentin");
@@ -46,8 +44,5 @@ public class Scenario7 {
         assertEquals(1412, jules.getMontantBillet());
 
         assertEquals(1288, quentin.getMontantBillet());
-
-
-        System.out.println("[REUSSITE] Scénario 7 : Tests pour le déplacement d’un joueur sur une compagnie achetée\n");
     }
 }
